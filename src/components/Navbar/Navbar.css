@@ -1,0 +1,80 @@
+* {
+    box-sizing: border-box;
+}
+
+.navigationBar{
+    position: relative;
+    background-color: green;
+    
+}
+
+.navLogo{
+    margin: 30px auto;
+    display: inline-block;
+    float: left;
+    width: 245px;
+    max-height: 29px;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.topBar{
+    float: right;
+    display: inline-block;
+    height: 60px;
+    margin: 0;
+}
+
+.topBar > ul {
+    height: 60px;
+    line-height: 60px;
+    list-style: none;
+    margin: 30px auto;
+    color: #fff;
+}
+
+.topBar ul li{
+    margin-left: 20px ;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    color: #fff;
+    
+}
+
+.topBar ul li:last-child{
+
+    margin-right: 20px;
+}
+
+.bottomBar{
+    font-weight: 600;
+    display: flex;
+    margin: 0;
+}
+
+.bottomBar ul{
+    margin-left: -6px;
+    color: #fff;
+}
+
+.bottomBar > ul{
+    flex-basis: 85%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    
+    line-height: 36px;
+    margin-top: 80px;
+}
+
+.bottomBar > ul > li{
+    display: block;
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: center;
+    padding: 0 10px;
+    transition: all 0.2s ease-in-out;
+}
