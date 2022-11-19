@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+}
+
+
+.gundem{
+
+    float: left;
+    width: 15%;
+    overflow: scroll;
+    
+    
+}
+
+.gundemTitle{
+
+    color: gray;
+    font-size: 1rem;
+    width: 65%;
+
+}
+
+
+.gundemler{
+    margin-bottom: 0;
+    list-style: none;
+    text-align: start;
+    
+    
+}
+
+.gundemler li:first-child{
+    border-top: 0;
+}
+
+.gundemler > li > p{
+
+   display: block;
+   padding: 10px 0;
+   word-wrap: break-word;
+   color: #333;
+   text-decoration: none;
+   touch-action: manipulation;
+   cursor: pointer;
+   font-size: 0.9rem;
+   height: 10%;
+    overflow: scroll;
+
+}
+
+.gundemler > li > p:hover{
+
+    background-color: rgb(246,247,247);
+    width: 100%;
+}
