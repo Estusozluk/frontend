@@ -1,0 +1,79 @@
+* {
+    box-sizing: border-box;
+}
+
+.registerLoginForm{
+
+    float: left;
+    display: flex;
+    flex-direction: column;
+    margin-left: 70px;
+    margin-top: 50px;
+  
+}
+
+.registrationLoginTitle{
+
+    display: flex;
+    justify-content: start;
+    text-align: start;
+
+    padding-top: 50px;
+  
+}
+
+.passToRegister{
+
+    color: #000;
+
+}
+
+.registerLoginForm label{
+    text-align: start;
+    padding: 5px 0;
+    margin-top: 20px;
+}
+
+.registerLoginForm .registerLoginInput{
+
+    border: 0;
+    border: 0.1px solid #000;
+    height: 30px;
+    width: 300px;
+    
+}
+
+
+
+.registerLoginForm .registerLoginInput::placeholder{
+
+    font-size: 0.8rem;
+    padding-left: 10px;
+}
+
+.passwordConditions{
+    text-align: start;
+    font-size: 0.6rem;
+}
+
+.registerLoginButtonField{
+
+
+    justify-content: start;
+    text-align: start;
+}
+
+.registerLoginButton{
+
+    border: none;
+    color: #fff;
+    background-color: green;
+    padding: 10px;
+    cursor: pointer;
+
+}
+
+.loginPart{
+
+    margin-top: 50px;
+}

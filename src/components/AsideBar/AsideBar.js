@@ -8,10 +8,10 @@ const AsideBar = () => {
         <h2 className='gundemTitle'>gündem</h2>
       <ul className='gundemler'>
         <li>
-            <p>burcu hoca'nin ai sinavi</p>
+            <p>yemekhane</p>
         </li>
         <li>
-            <p>serkan hoca'nin pattern sinavi</p>
+            <p>ronaldo ve messi'nin ortak paylasimi</p>
         </li>
         <li>
             <p>dünya kupası</p>
@@ -26,19 +26,19 @@ const AsideBar = () => {
             <p>fransa'nin sakatliklari</p>
         </li>
         <li>
-            <p>3.dunya savaşı</p>
+            <p>disney plus</p>
         </li>
         <li>
-            <p>dolar 20</p>
+            <p>tensorflow</p>
         </li>
         <li>
-            <p>süleyman soylu</p>
+            <p>yapay zeka</p>
         </li>
         <li>
             <p>1899</p>
         </li>
         <li>
-            <p>zam</p>
+            <p>gibi dizisi</p>
         </li>
         <li>
             <p>flutter</p>
