@@ -1,8 +1,11 @@
 import React from 'react'
 import './Login.css'
 import {Link} from 'react-router-dom'
+import useForm from '../FormValidation/useForm'
 
 const Login = () => {
+
+  const {handleChange, handleLoginSubmit, validateInfo, handleLoginChange, loginValues} = useForm();
   return (
     <main>
         <form className='registerLoginForm'>
@@ -12,19 +15,19 @@ const Login = () => {
         <p className='passToRegister'>ya da ilk defa mı geliyorsun? seni kayıt ol kısmına alalım hemen...</p>
        </Link>
 
-        <label for="username">email</label>
-        <input type='email' className='registerLoginInput' placeholder='seni burda görmek bize şeref verdi...' />
+        <label for="username">kullanıcı adı</label>
+        <input type='text' className='registerLoginInput' placeholder='seni burda görmek bize şeref verdi...' name='username' onChange={handleLoginChange}  />
 
 
-        <label for="username">şifre</label>
-        <input type='password' className='registerLoginInput' placeholder="şifreyi hatırlıyorsan bizi çok memnun edersin..." />
+        <label for="password">şifre</label>
+        <input type='password' className='registerLoginInput' placeholder="şifreyi hatırlıyorsan bizi çok memnun edersin..." name='password' onChange={handleLoginChange} />
 
 
 
         
         
         <div className='registerLoginButtonField loginPart'>
-          <button className='registerLoginButton'>artık resmen hoş geldin !</button>
+          <button className='registerLoginButton' onClick={handleLoginSubmit}>artık resmen hoş geldin !</button>
         </div>
 
       </form>

@@ -1,12 +1,18 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
 const useForm = () => {
 
-    const [registerLoginValues, setRegisterLoginValues] = useState({
+    const [registerValues, setRegisterValues] = useState({
         username: '',
         email: '',
         password: ''
     });
+
+    const [loginValues, setLoginValues] = useState({
+        username: '',
+        password: ''
+    })
 
     const [errors, setErrors] = useState({});
 
@@ -17,33 +23,42 @@ const useForm = () => {
 
         const {name, value} = e.target;
 
-        setRegisterLoginValues({
-            ...registerLoginValues,
+        setRegisterValues({
+            ...registerValues,
             [name]: value
         })
     }
 
-    function validateInfo(registerLoginValues){
+    const handleLoginChange = e => {
+        const {name, value} = e.target;
+
+        setLoginValues({
+            ...loginValues,
+            [name]: value
+        })
+    }
+
+    function validateInfo(registerValues){
         let errors = {};
 
-        if(!registerLoginValues.username.trim()){
+        if(!registerValues.username.trim()){
             errors.username = 'kullanıcı adı yok ?!'
         }
 
-        if(!registerLoginValues.email){
+        if(!registerValues.email){
             errors.email = 'email yok ?!'
         }
-        else if(!/\S+@\S+\.\S+/.test(registerLoginValues.email)){
+        else if(!/\S+@\S+\.\S+/.test(registerValues.email)){
             errors.email = 'e bu email yanlış ?!'
         }
 
-        if(!registerLoginValues.password){
+        if(!registerValues.password){
             errors.password = 'e şifre yok ?!'
         }
-        else if(registerLoginValues.password < 3){
+        else if(registerValues.password < 3){
             errors.password = 'daha uzun bir şifre gir'
         }
-        else if(registerLoginValues.password > 15){
+        else if(registerValues.password > 15){
             errors.password = 'daha kısa bir şifre gir'
         }
         
@@ -54,13 +69,53 @@ const useForm = () => {
 
     }
 
-    const handleSubmit = e => {
+    const handleRegisterSubmit = e => {
         e.preventDefault();
         setIsSubmitting(true);
+
+
+        axios.post("https://localhost:5001/api/User", registerValues, {
+            headers: {
+              'Access-Control-Allow-Origin' : '*',
+              'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+              "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
+            }
+          }).then(
+            res => {
+                console.log(res);
+            }
+        ).catch(
+            err => {
+                console.log(err)
+            }
+        )
     }
 
 
-    return {handleChange, handleSubmit, validateInfo}
+    const handleLoginSubmit = e => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+
+        axios.post("https://localhost:5001/api/User/login", loginValues, {
+            headers: {
+              'Access-Control-Allow-Origin' : '*',
+              'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+              "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
+            }
+          }).then(
+            res => {
+                console.log(res)
+            }
+          ).catch(
+            err => {
+                console.log(err)
+            }
+          )
+    }
+
+
+    return {handleChange, handleRegisterSubmit, handleLoginChange, validateInfo, handleLoginSubmit, registerValues}
 }
 
 export default useForm
