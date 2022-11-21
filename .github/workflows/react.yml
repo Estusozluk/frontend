@@ -28,6 +28,8 @@ jobs:
         
     - name: build react
       run: npm run build
+      env:
+        CI: false
         
     - name: 📂 Sync files
       # if: ${{ github.ref == 'refs/heads/main' }}
