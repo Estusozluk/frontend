@@ -2,7 +2,7 @@ name: EstuSozluk-Frontend
 
 on:
   push:
-    branches: [ "main", "ci/cd" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
