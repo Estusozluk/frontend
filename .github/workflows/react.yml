@@ -22,13 +22,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         #cache: 'npm'
-    - name: files
-      run: ls
-    - name: initial
-      run: |
-        FILECOUNT=$(ls | wc -l)
-        if [ $FILECOUNT -ne 2 ]; then
-          echo "Failed!"
-          exit 1;
-        fi
-        echo "passed!"
+        
+    - name: 📂 Sync files
+      # if: ${{ github.ref == 'refs/heads/main' }}
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: ${{ secrets.FTPSERVER }}
+        username: ${{ secrets.FTPNAME }}
+        password: ${{ secrets.FTPPASSWORD }}
+        local-dir: build/
+        server-dir: httpdocs/
+        # exclude: |
+        #  appsettings.json
