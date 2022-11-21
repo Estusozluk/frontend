@@ -23,6 +23,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         #cache: 'npm'
         
+    - name: build react
+      run: npm run build
+        
     - name: 📂 Sync files
       # if: ${{ github.ref == 'refs/heads/main' }}
       uses: SamKirkland/FTP-Deploy-Action@4.3.2
