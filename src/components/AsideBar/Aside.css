@@ -44,8 +44,6 @@
    cursor: pointer;
    font-size: 0.9rem;
    height: 10%;
-    overflow: scroll;
-
 }
 
 .gundemler > li > p:hover{
