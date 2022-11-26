@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+ 
+  overflow-y: hidden;
+}
+
+.asd{
+  display: flex;
+  flex-direction: row;
 }
 
 .App-logo {

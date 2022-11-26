@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { Navigate } from 'react-router-dom';
 
 const useForm = () => {
 
@@ -17,6 +18,13 @@ const useForm = () => {
     const [errors, setErrors] = useState({});
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const [isLoggedIn, setIsLoggedIn] = useState(true)
+
+
+
+
+   
 
 
     const handleChange = e => {
@@ -73,9 +81,12 @@ const useForm = () => {
         e.preventDefault();
         setIsSubmitting(true);
 
+    
+
 
         axios.post("https://localhost:5001/api/User", registerValues, {
             headers: {
+               
               'Access-Control-Allow-Origin' : '*',
               'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
               "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
@@ -99,6 +110,7 @@ const useForm = () => {
 
         axios.post("https://localhost:5001/api/User/login", loginValues, {
             headers: {
+              'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
               'Access-Control-Allow-Origin' : '*',
               'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
               "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
@@ -106,6 +118,13 @@ const useForm = () => {
           }).then(
             res => {
                 console.log(res)
+                if(res.status == 200){
+
+                    setIsLoggedIn = true
+                    Navigate("/")
+
+
+                }
             }
           ).catch(
             err => {
@@ -115,7 +134,7 @@ const useForm = () => {
     }
 
 
-    return {handleChange, handleRegisterSubmit, handleLoginChange, validateInfo, handleLoginSubmit, registerValues}
+    return {handleChange, handleRegisterSubmit, handleLoginChange, validateInfo, handleLoginSubmit, registerValues, loginValues, isLoggedIn}
 }
 
 export default useForm

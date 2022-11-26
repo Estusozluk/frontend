@@ -3,7 +3,7 @@ import './Aside.css'
 
 const AsideBar = () => {
   return (
-    <aside className='gundem'>
+    <div className='gundem'>
 
         <h2 className='gundemTitle'>gündem</h2>
       <ul className='gundemler'>
@@ -48,7 +48,7 @@ const AsideBar = () => {
         </li>
 
       </ul>
-    </aside>
+    </div>
   )
 }
 

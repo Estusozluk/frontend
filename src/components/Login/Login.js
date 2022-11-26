@@ -16,11 +16,11 @@ const Login = () => {
        </Link>
 
         <label for="username">kullanıcı adı</label>
-        <input type='text' className='registerLoginInput' placeholder='seni burda görmek bize şeref verdi...' name='username' onChange={handleLoginChange}  />
+        <input type='text' className='registerLoginInput' placeholder='seni burda görmek bize şeref verdi...' name='username' value={loginValues.username} onChange={handleLoginChange}  />
 
 
         <label for="password">şifre</label>
-        <input type='password' className='registerLoginInput' placeholder="şifreyi hatırlıyorsan bizi çok memnun edersin..." name='password' onChange={handleLoginChange} />
+        <input type='password' className='registerLoginInput' placeholder="şifreyi hatırlıyorsan bizi çok memnun edersin..." name='password' value={loginValues.password} onChange={handleLoginChange} />
 
 
 

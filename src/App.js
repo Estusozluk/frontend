@@ -5,20 +5,29 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import AsideBar from './components/AsideBar/AsideBar';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+import LandingPage from './components/LandingPage/LandingPage';
+import EntryTemplate from './components/EntryTemplate/EntryTemplate';
+import Profile from './components/Profile/Profile';
+import Popup from './components/Popup/Popup';
 
 function App() {
   return (
     <div className="App">
        <BrowserRouter>
       <Navbar />
-      <AsideBar />
+
+      <div className='asd'>
+              <AsideBar />
 
      
       <Routes>
-        <Route path='/' element={<Register />} />
+        <Route path='/' element={<LandingPage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/profile' element={<Profile />} />
       </Routes>
+      </div>
+
       </BrowserRouter>
     </div>
   );

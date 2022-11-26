@@ -7,7 +7,7 @@
 
     float: left;
     width: 15%;
-    overflow: scroll;
+    height: 100%;
     
     
 }
@@ -43,8 +43,8 @@
    touch-action: manipulation;
    cursor: pointer;
    font-size: 0.9rem;
-   height: 10%;
-    overflow: scroll;
+   
+    
 
 }
 
