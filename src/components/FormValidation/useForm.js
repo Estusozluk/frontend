@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { Router } from 'react-router-dom';
 
 const useForm = () => {
 
@@ -17,6 +19,13 @@ const useForm = () => {
     const [errors, setErrors] = useState({});
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+
+
+   const navigate = useNavigate()
 
 
     const handleChange = e => {
@@ -73,10 +82,13 @@ const useForm = () => {
         e.preventDefault();
         setIsSubmitting(true);
 
+    
+
 
         axios.post("https://localhost:5001/api/User", registerValues, {
             headers: {
-              'Access-Control-Allow-Origin' : '*',
+               
+              'Access-Control-Allow-Origin' : 'http://localhost:3000/',
               'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
               "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
             }
@@ -92,20 +104,43 @@ const useForm = () => {
     }
 
 
-    const handleLoginSubmit = e => {
+     const handleLoginSubmit = async(e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
 
-        axios.post("https://localhost:5001/api/User/login", loginValues, {
+       
+        
+      
+
+
+        await axios.post("https://localhost:5001/api/User/login", loginValues, {
             headers: {
-              'Access-Control-Allow-Origin' : '*',
+              
+              'Access-Control-Allow-Origin' : 'http://localhost:3000/',
               'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
               "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
             }
           }).then(
             res => {
                 console.log(res)
+                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('userId', res.data.userid)
+                localStorage.setItem('username', res.data.username)
+                
+                let token = localStorage.getItem('token')
+                let username = localStorage.getItem('username')
+                let userid = localStorage.getItem('userId')
+                console.log(token)
+                console.log(username)
+                console.log(userid)
+
+                if(token != null){
+                    
+                    setIsLoggedIn(true)
+                    console.log(isLoggedIn)
+                    navigate("/")
+                }
             }
           ).catch(
             err => {
@@ -115,7 +150,7 @@ const useForm = () => {
     }
 
 
-    return {handleChange, handleRegisterSubmit, handleLoginChange, validateInfo, handleLoginSubmit, registerValues}
+    return {handleChange, handleRegisterSubmit, handleLoginChange, validateInfo, handleLoginSubmit, registerValues, loginValues, isLoggedIn}
 }
 
 export default useForm

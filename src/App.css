@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+ 
+  overflow-y: hidden;
+}
+
+.asd{
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh -  132px);
 }
 
 .App-logo {

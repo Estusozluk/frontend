@@ -1,0 +1,81 @@
+* {
+
+    box-sizing: border-box;
+    
+}
+
+.entry{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: start;
+    padding-left: 120px;
+    padding-top: 30px;
+    padding-right: 20px;
+    
+
+}
+
+.entry .entryTitle{
+    display: flex;
+    text-align: start;
+    font-size: 1.3rem;
+    text-decoration: none;
+    margin: 0;
+    flex-direction: row;
+}
+
+.entry .entryCaption{
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    
+    line-height: 20px;
+}
+
+.entry .entryLikeDislike{
+    display: flex;
+    flex-flow: row;
+    font-size: 1.2rem;
+
+}
+
+.entryLike + .entryDislike {
+
+   margin-left: 25px;
+   
+}
+
+
+.entryDislike + .enterEntry{
+
+    margin-left: 25px;
+}
+
+
+
+.entryUserInfo{
+    display: flex;
+}
+
+.entryFooter{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+
+.entryFooter > .entryLikeDislike > .entryUserInfo{
+
+    justify-content: space-between;
+}
+
+.entryUserInfo{
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+   
+    right: 60px;
+}
