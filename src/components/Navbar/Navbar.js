@@ -23,6 +23,7 @@ const Navbar = () => {
 
   
   return (
+    
     <header>
       <div className='navigationBar'>
       <div className='navLogo'>
@@ -31,49 +32,28 @@ const Navbar = () => {
 
       <nav className='topBar'>
                
-        <ul>
-
-          {isLoggedIn ?
-
-<div>
+      <ul>
 
 
-    <UserLoggedIn text="ardi jorganxhi" />
-  
 
-</div>
 
-:
+
 
 <div>
 
 <Link to='/login'>
-    <li>giriş</li>
-    </Link>
+<li>giriş</li>
+</Link>
 
-    
-  
-  <Link to='/register'>
-    <li>kayıt ol</li>
-  </Link>
+
+
+<Link to='/register'>
+<li>kayıt ol</li>
+</Link>
 
 </div>
 
-
-
-
-          
-        
-        
-        
-        }
-          
-         
-  
-        
-          
-         
-        </ul>
+</ul>
       </nav>
 
       <nav className='bottomBar'>

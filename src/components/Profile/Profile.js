@@ -34,7 +34,7 @@ const Profile = () => {
          
           <div className='userEntries'>
 
-            <EntryTemplate />
+            <EntryTemplate title={"dunya kupasi"} caption={"4 yilda bir oynanan kupa"} />
           </div>
           
           </div>

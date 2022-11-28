@@ -18,11 +18,12 @@
 }
 
 .entry .entryTitle{
-
+    display: flex;
     text-align: start;
     font-size: 1.3rem;
     text-decoration: none;
     margin: 0;
+    flex-direction: row;
 }
 
 .entry .entryCaption{
@@ -75,7 +76,6 @@
     display: flex;
     flex-direction: column;
     font-size: 0.8rem;
-    position: absolute;
    
     right: 60px;
 }
