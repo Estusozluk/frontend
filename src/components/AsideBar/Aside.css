@@ -4,29 +4,38 @@
 
 
 .gundem{
-
+    
+    border-style: ridge;
+    border-color:  rgb(9, 57, 9);
+    border-width: thin;
+    border-top: none;
+    background-color: antiquewhite;
     float: left;
-    width: 15%;
+    width: 20%;
     height: 100%;
+   
     
     
 }
 
 .gundemTitle{
-
-    color: gray;
-    font-size: 1rem;
-    width: 65%;
+    
+    padding-bottom: 5px;
+    border-bottom: solid rgb(9, 57, 9);
+    border-width: thin;
+    font-size: 1.2rem;
+   
 
 }
 
 
 .gundemler{
+    background-color: antiquewhite;
+    padding-left: 10%;
     margin-bottom: 0;
-    list-style: none;
-    text-align: start;
-    
-    
+    list-style: disc;
+    text-align: left;
+
 }
 
 .gundemler li:first-child{
@@ -36,13 +45,13 @@
 .gundemler > li > p{
 
    display: block;
-   padding: 10px 0;
+   padding: 0px 0;
    word-wrap: break-word;
    color: #333;
-   text-decoration: none;
+   text-decoration: underline;
    touch-action: manipulation;
    cursor: pointer;
-   font-size: 0.9rem;
+   font-size: 0.95rem;
    
     
 
@@ -50,6 +59,6 @@
 
 .gundemler > li > p:hover{
 
-    background-color: rgb(246,247,247);
+    background-color: rgb(230, 215, 195);
     width: 100%;
 }

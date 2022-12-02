@@ -5,7 +5,7 @@ const AsideBar = () => {
   return (
     <div className='gundem'>
 
-        <h2 className='gundemTitle'>gündem</h2>
+        <div className='gundemTitle'>Gündem</div>
       <ul className='gundemler'>
         <li>
             <p>yemekhane</p>
