@@ -5,32 +5,40 @@
 }
 
 .entry{
-
+    background-color: rgb(240, 225, 205);
     display: flex;
     flex-direction: column;
     justify-content: start;
     text-align: start;
-    padding-left: 120px;
-    padding-top: 30px;
-    padding-right: 20px;
-    
+    margin-left: 4%;
+    margin-top: 3%;
+    margin-right: 4%;
+    padding: 2%;
+    border-radius: 25px;
 
+}
+
+.entry .entryTitle .entryTitleContainer{
+    display: flex;
+    flex-direction: row;
+    margin: -20px;
 }
 
 .entry .entryTitle{
     display: flex;
+    justify-content: space-around;
     text-align: start;
     font-size: 1.3rem;
-    text-decoration: none;
+    text-decoration: underline;
     margin: 0;
     flex-direction: row;
 }
 
 .entry .entryCaption{
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     word-wrap: break-word;
     
-    line-height: 20px;
+    line-height: 10px;
 }
 
 .entry .entryLikeDislike{

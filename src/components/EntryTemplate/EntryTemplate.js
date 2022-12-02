@@ -74,8 +74,11 @@ const EntryTemplate = (props) => {
     
     <div className='entry'>
       <div className='entryTitle'>
+        <div className='entryTitleContainer'>
         <h2>{props.title}</h2>
         <p className='enterEntry' onClick={() => setOpenPopup(!openPopup)}><IoMdAddCircle /></p>
+        </div>
+        
 
       </div>
 

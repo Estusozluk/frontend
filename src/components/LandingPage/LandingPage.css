@@ -3,6 +3,7 @@
 }
 
 .entries{
+    background-color: antiquewhite;
     overflow-y: scroll;
     width: 100%;
 }
