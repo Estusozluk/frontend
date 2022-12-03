@@ -26,9 +26,11 @@ const Navbar = () => {
 
     <header>
       <div className='navigationBar'>
+        <Link to='/'>
         <div className='navLogo'>
           <div>estüsözlük</div>
         </div>
+        </Link>
 
 
         <div className='bottomBar'>

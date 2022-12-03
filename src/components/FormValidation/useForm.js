@@ -139,7 +139,7 @@ const useForm = () => {
                     
                     setIsLoggedIn(true)
                     console.log(isLoggedIn)
-                    navigate("/")
+                    navigate("/profile")
                 }
             }
           ).catch(
