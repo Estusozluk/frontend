@@ -2,8 +2,12 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { Router } from 'react-router-dom';
+import {useDispatch} from 'react-redux'
+import {login, logout} from "../features/userSlice"
 
 const useForm = () => {
+
+    const dispatch = useDispatch()
 
     const [registerValues, setRegisterValues] = useState({
         username: '',
@@ -137,9 +141,17 @@ const useForm = () => {
 
                 if(token != null){
                     
-                    setIsLoggedIn(true)
-                    console.log(isLoggedIn)
+                    dispatch(
+                        login({
+                            username: loginValues.username,
+                            password: loginValues.password,
+                            loggedIn: true
+                        })
+                    )
                     navigate("/profile")
+                }
+                else{
+                    dispatch(logout())
                 }
             }
           ).catch(

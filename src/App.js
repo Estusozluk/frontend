@@ -11,16 +11,19 @@ import Profile from './components/Profile/Profile';
 import Popup from './components/Popup/Popup';
 
 import NavbarLoggedIn from './components/Navbar/NavbarLoggedIn';
+import {useSelector} from 'react-redux'
+import {selectUser} from './components/features/userSlice'
 
 function App() {
 
+  const user = useSelector(selectUser)
 
   return (
     <div className="App">
        <BrowserRouter>
 
 
-        <Navbar />
+        {user ? <NavbarLoggedIn /> : <Navbar />}
       
 
       <div className='asd'>
