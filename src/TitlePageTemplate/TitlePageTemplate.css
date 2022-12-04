@@ -1,0 +1,13 @@
+*{
+
+    box-sizing: border-box;
+}
+
+
+.titlePage{
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+}
