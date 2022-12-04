@@ -1,85 +1,83 @@
-*{
+* {
 
     box-sizing: border-box;
 }
 
-.userInformations{
-    
+.userInformations {
+
     display: flex;
-    
+
     flex-direction: column;
     margin: 0;
+    overflow-y: auto;
+    width: 100%;
 
 }
 
-.headerInformations{
+.headerInformations {
 
     display: flex;
     flex-direction: row;
     padding-left: 250px;
 }
 
-.username{
-    
+.username {
+
     padding-top: 100px;
 }
 
-.userName{
+.userName {
 
     display: flex;
     justify-content: start;
 }
-.userAvatar{
-   
+
+.userAvatar {
+
     font-size: 6rem;
     float: right;
-    
-   
+
+
 }
 
-.otherInformations{
+.otherInformations {
 
     display: flex;
     flex-direction: row;
 }
 
-.otherInformations p + p {
+.otherInformations p+p {
 
     margin-left: 200px;
 }
 
-.footerInfo{
+.footerInfo {
 
     display: flex;
     justify-content: start;
-   
+
     flex-direction: column;
-  
-    
+
+
 }
 
 
-.footerInfo h1{
+.footerInfo h1 {
 
     text-align: start;
     padding-left: 200px;
 }
 
-.footerTitleHorizontal{
-   
-    position: absolute;
-    
-    left: 26.5%;
-    right: 3%;
-    
+.footerTitleHorizontal {
+
+   width: 91%;
+
 }
 
-.userEntries{
+.userEntries {
 
     display: flex;
-    justify-content: start;
+    flex-direction: column;
     float: left;
     padding-left: 80px;
 }
-
-
