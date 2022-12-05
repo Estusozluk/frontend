@@ -4,8 +4,9 @@ import { FaArrowUp } from 'react-icons/fa';
 import { FaArrowDown } from 'react-icons/fa'
 import {IoMdAddCircle} from 'react-icons/io'
 import Popup from '../Popup/Popup';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import RequestService from '../../services/RequestService';
+
 const EntryTemplate = (props) => {
 
   const [openPopup, setOpenPopup] = useState(false)
@@ -48,7 +49,7 @@ const EntryTemplate = (props) => {
     e.preventDefault();
 
 
-    axios.post('https://localhost:5001/api/entry/', entryValues, {
+    RequestService.post('/api/entry/', entryValues, {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin' : 'http://localhost:3000/',

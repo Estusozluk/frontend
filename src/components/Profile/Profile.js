@@ -1,8 +1,8 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
 import EntryTemplate from '../EntryTemplate/EntryTemplate'
 import './Profile.css'
+import RequestService from '../../services/RequestService'
 
 const Profile = () => {
 
@@ -15,7 +15,7 @@ const Profile = () => {
   let badies = localStorage.getItem("badies")
 
   useEffect(() => {
-    axios.get("https://localhost:5001/api/entry/user/" + userid)
+    RequestService.get("/api/entry/user/" + userid)
       .then(res => {
         console.log(res.data);
         setData(res.data)

@@ -1,7 +1,7 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import EntryTemplate from '../EntryTemplate/EntryTemplate'
 import './LandingPage.css'
+import RequestService from '../../services/RequestService'
 
 
 
@@ -10,7 +10,7 @@ const LandingPage = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get("https://localhost:5001/api/entry/landing")
+        RequestService.get("/api/entry/landing")
             .then(res => {
                     console.log(res.data);
                     setData(res.data)
