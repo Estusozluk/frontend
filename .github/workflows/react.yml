@@ -52,5 +52,6 @@ jobs:
         password: ${{ secrets.FTPPASSWORD }}
         local-dir: build/
         server-dir: httpdocs/
+        timeout: 90000
         # exclude: |
         #  appsettings.json
