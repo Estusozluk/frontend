@@ -1,9 +1,8 @@
-import axios from 'axios';
-import React, { useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
-import { Router } from 'react-router-dom';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {useDispatch} from 'react-redux'
-import {login, logout} from "../features/userSlice"
+import { login } from "../features/userSlice"
+import RequestService from '../../services/RequestService'
 
 const useForm = () => {
 
@@ -89,7 +88,7 @@ const useForm = () => {
     
 
 
-        axios.post("https://localhost:5001/api/User", registerValues, {
+        RequestService.post("/api/User", registerValues, {
             headers: {
                
               'Access-Control-Allow-Origin' : 'http://localhost:3000/',
@@ -124,7 +123,7 @@ const useForm = () => {
       
 
 
-        await axios.post("https://localhost:5001/api/User/login", loginValues, {
+        await RequestService.post("/api/User/login", loginValues, {
             headers: {
               
               'Access-Control-Allow-Origin' : 'http://localhost:3000/',

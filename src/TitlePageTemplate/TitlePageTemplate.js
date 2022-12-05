@@ -1,14 +1,10 @@
-
 import React, {useEffect, useState} from 'react'
 import '../components/EntryTemplate/EntryTemplate.css'
 import './TitlePageTemplate.css'
 import { FaArrowUp } from 'react-icons/fa';
 import { FaArrowDown } from 'react-icons/fa'
-import {IoMdAddCircle} from 'react-icons/io'
-
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import EntryTemplate from '../components/EntryTemplate/EntryTemplate';
+import RequestService from '../services/RequestService'
 
 const TitlePageTemplate = (props) => {
 
@@ -20,7 +16,7 @@ const TitlePageTemplate = (props) => {
 
     useEffect(() => {
 
-        axios.get("https://localhost:5001/api/entry/" + title).then(
+        RequestService.get("/api/entry/" + title).then(
             res => {
                 console.log(res)
                 setEntryArray(res.data)
