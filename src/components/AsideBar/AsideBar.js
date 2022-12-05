@@ -1,51 +1,51 @@
-import React from 'react'
+import axios from 'axios'
+import React, {useEffect, useState} from 'react'
+import { useNavigate } from 'react-router-dom'
+import TitlePageTemplate from '../../TitlePageTemplate/TitlePageTemplate'
 import './Aside.css'
 
 const AsideBar = () => {
+
+
+    const [titlesArray, setTitlesArray] = useState([])
+
+
+    useEffect(() => {
+
+
+
+        axios.get("https://localhost:5001/api/entry/titles").then(
+            res => {
+                console.log(res)
+                setTitlesArray(res.data)
+            }
+        ).catch(
+            err => {
+                console.log(err)
+            }
+        )
+
+
+
+    }, [])
+
+    const navigate = useNavigate();
+   
+    
+
   return (
     <div className='gundem'>
 
         <div className='gundemTitle'>Gündem</div>
       <ul className='gundemler'>
-        <li>
-            <p>yemekhane</p>
-        </li>
-        <li>
-            <p>ronaldo ve messi'nin ortak paylasimi</p>
-        </li>
-        <li>
-            <p>dünya kupası</p>
-        </li>
-        <li>
-            <p>arjantin 2014 kupa finali</p>
-        </li>
-        <li>
-            <p>ronaldo</p>
-        </li>
-        <li>
-            <p>fransa'nin sakatliklari</p>
-        </li>
-        <li>
-            <p>disney plus</p>
-        </li>
-        <li>
-            <p>tensorflow</p>
-        </li>
-        <li>
-            <p>yapay zeka</p>
-        </li>
-        <li>
-            <p>1899</p>
-        </li>
-        <li>
-            <p>gibi dizisi</p>
-        </li>
-        <li>
-            <p>flutter</p>
-        </li>
-        <li>
-            <p>python'ın java'dan eski bir dil olması</p>
-        </li>
+
+      {titlesArray.map(entry => {
+                return (
+                    <li onClick={() => navigate('/titlePage', {state: {title: entry}})}>
+                        <p>{entry}</p>
+                    </li>
+                )
+            })}
 
       </ul>
     </div>
