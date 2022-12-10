@@ -22,7 +22,7 @@ const LandingPage = () => {
     return (
         <div className='entries'>
             {data.map(entry => {
-                return <EntryTemplate title={entry.value.titleData.titlename} caption={entry.value.titleData.content} />
+                return <EntryTemplate title={entry.value.titleData.titlename} caption={entry.value.titleData.content} user={entry.value.titleData.username} date={entry.value.titleData.writedate} />
             })}
         </div>
     )

@@ -2,6 +2,13 @@
     box-sizing: border-box;
 }
 
+
+.registerLogin{
+
+    background-color: antiquewhite;
+    width: 100%;
+}
+
 .registerLoginForm{
 
     float: left;
@@ -9,7 +16,7 @@
     flex-direction: column;
     margin-left: 70px;
     margin-top: 50px;
-  
+    
 }
 
 .registrationLoginTitle{

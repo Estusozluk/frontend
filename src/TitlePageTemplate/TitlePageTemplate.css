@@ -10,4 +10,14 @@
     flex-direction: column;
     width: 100%;
     overflow-y: scroll;
+    background-color: antiquewhite;
+}
+
+.titlePageTitle .titlePageTitleContainer{
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }

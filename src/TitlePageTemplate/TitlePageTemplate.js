@@ -1,5 +1,5 @@
 
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import '../components/EntryTemplate/EntryTemplate.css'
 import './TitlePageTemplate.css'
 import { FaArrowUp } from 'react-icons/fa';
@@ -9,6 +9,7 @@ import {IoMdAddCircle} from 'react-icons/io'
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import EntryTemplate from '../components/EntryTemplate/EntryTemplate';
+import Popup from '../components/Popup/Popup';
 
 const TitlePageTemplate = (props) => {
 
@@ -16,6 +17,24 @@ const TitlePageTemplate = (props) => {
     const {title} = location.state;
 
     const [entryArray, setEntryArray] = useState([])
+    const [openPopup, setOpenPopup] = useState(false)
+
+    let userid = localStorage.getItem('userId')
+    let token = localStorage.getItem('token')
+    const ref = useRef()
+    const [entryValues, setEntryValues] = useState({
+  
+      userid: userid,
+      titlename: title,
+      content: ''
+  
+      
+  
+  
+  
+      
+    })
+
 
 
     useEffect(() => {
@@ -30,14 +49,70 @@ const TitlePageTemplate = (props) => {
                 console.log(err)
             }
         )
-    }, [title])
+    }, [title, openPopup])
+
+
+  const handleEntryValues = e => {
+
+
+    const {name, value} = e.target;
+
+    setEntryValues({
+      ...entryValues,
+      [name]: value
+    })
+
+  }
+
+
+
+  const handleEntryPost = e => {
+    e.preventDefault();
+
+    if(ref.current.value.trim().length <= 0){
+      alert("Entry boş olamaz, lütfen entry giriniz!")
+    }
+
+    axios.post('https://localhost:5001/api/entry/', entryValues, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+        'Authorization': 'Bearer '+ token
+      }
+    }).then(
+      res => {
+        console.log(res)
+
+        if(res.status === 200){
+
+          alert("Entry'niz başarıyla iletildi!")
+          setOpenPopup(false)
+        }
+        else{
+          alert("Entry girilemedi, lutfen tekrar deneyiniz!")
+          setOpenPopup(false)
+        }
+      }
+    ).err(
+      err => {
+        console.log(err)
+      }
+    )
+  }
   return (
     
     <div className='titlePage'>
 
-        <div className='title'>
-            <h2>{title}</h2>
+<div className='titlePageTitle'>
+        <div className='titlePageTitleContainer'>
+        <h2>{title}</h2>
+        <p className='enterEntry' onClick={() => setOpenPopup(!openPopup)}><IoMdAddCircle /></p>
         </div>
+        
+
+      </div>
 
         
              {entryArray.map(entry => {
@@ -66,6 +141,24 @@ const TitlePageTemplate = (props) => {
                 )
             })}
         
+        <Popup trigger={openPopup} title={title}>
+
+<div className='modal'>
+
+<div className='overlay'>
+<div className='modalContent'>
+  <h2>{title}</h2>
+  <input type="text" placeholder='entry giriniz...' name='content' ref={ref} value={entryValues.content} onChange={handleEntryValues} className='captionEnter' required />
+  <button className='closeModal'  onClick={() => setOpenPopup(false)}>Close</button>
+  <button className='enterYourEntry' onClick={handleEntryPost}>entry gir</button>
+  
+</div>
+
+</div>
+
+</div>
+
+</Popup>
 
 
     </div>

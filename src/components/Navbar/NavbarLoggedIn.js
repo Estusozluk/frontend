@@ -1,46 +1,41 @@
-import React from 'react'
+import React from "react";
+import {FaPowerOff} from 'react-icons/fa'
+import "./Navbar.css";
 
 const NavbarLoggedIn = () => {
-  
-    return (
-    
-        <header>
-          <div className='navigationBar'>
-          <div className='navLogo'>
-            <p>estüsözlük</p>
-          </div>
-    
-          <nav className='topBar'>
-                   
+
+  function removeToken(){
+
+    localStorage.removeItem('token')
+  }
+  return (
+    <header>
+      <div className="navigationBar">
+        <div className="navLogo">
+          <p>estüsözlük</p>
+        </div>
+
+     
+
+        <nav className="bottomBar">
           <ul>
-    
-    
-    
-    
-    
-    
-    <div>
-    
-        <li>merhaba, ardi jorganxhi</li>
-    
-    </div>
-    
-    </ul>
-          </nav>
-    
-          <nav className='bottomBar'>
-            <ul>
-              <li>#gündem</li>
-              <li>#spor</li>
-              <li>#siyaset</li>
-              <li>#teknoloji</li>
-              <li>#estü</li>
-            </ul>
-          </nav>
-          </div>
-        </header>
-    )
-}
+            <li>
+            <div>
+              <li>merhaba, ardi jorganxhi</li>
+            </div>
+            </li>
+            
+          
+          </ul>
+          <ul>
+          <li>
+            <FaPowerOff onClick={removeToken} />
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
+};
 
-
-export default NavbarLoggedIn
+export default NavbarLoggedIn;

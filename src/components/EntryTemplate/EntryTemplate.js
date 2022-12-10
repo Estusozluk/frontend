@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import './EntryTemplate.css'
 import { FaArrowUp } from 'react-icons/fa';
 import { FaArrowDown } from 'react-icons/fa'
@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 const EntryTemplate = (props) => {
 
   const [openPopup, setOpenPopup] = useState(false)
+
+  const ref = useRef()
 
   let userid = localStorage.getItem('userId')
   const [entryValues, setEntryValues] = useState({
@@ -47,6 +49,9 @@ const EntryTemplate = (props) => {
   const handleEntryPost = e => {
     e.preventDefault();
 
+    if(ref.current.value.trim().length <= 0){
+      alert("Entry boş olamaz, lütfen entry giriniz!")
+    }
 
     axios.post('https://localhost:5001/api/entry/', entryValues, {
       headers: {
@@ -63,6 +68,10 @@ const EntryTemplate = (props) => {
         if(res.status === 200){
 
           alert("Entry'niz başarıyla iletildi!")
+          setOpenPopup(false)
+        }
+        else{
+          alert("Entry girilemedi, lutfen tekrar deneyiniz!")
           setOpenPopup(false)
         }
       }
@@ -108,7 +117,7 @@ const EntryTemplate = (props) => {
 <div className='overlay'>
     <div className='modalContent'>
         <h2>{props.title}</h2>
-        <input type="text" placeholder='entry giriniz...' name='content' value={entryValues.content} onChange={handleEntryValues} className='captionEnter' />
+        <input type="text" placeholder='entry giriniz...' name='content' ref={ref} value={entryValues.content} onChange={handleEntryValues} className='captionEnter' required />
         <button className='closeModal'  onClick={() => setOpenPopup(false)}>Close</button>
         <button className='enterYourEntry' onClick={handleEntryPost}>entry gir</button>
         

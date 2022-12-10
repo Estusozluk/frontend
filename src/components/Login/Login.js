@@ -3,7 +3,7 @@ import './Login.css'
 import {Link} from 'react-router-dom'
 import useForm from '../FormValidation/useForm'
 
-const Login = () => {
+const Login = (props) => {
 
   const {handleChange, handleLoginSubmit, validateInfo, handleLoginChange, loginValues} = useForm();
 
@@ -12,7 +12,7 @@ const Login = () => {
 
 
   return (
-    <main>
+    <div className='registerLogin'>
         <form className='registerLoginForm'>
       <h2 className='registrationLoginTitle'>oo kimler gelmiş, tekrardan hoş geldin</h2>
      
@@ -32,11 +32,11 @@ const Login = () => {
         
         
         <div className='registerLoginButtonField loginPart'>
-          <button className='registerLoginButton' onClick={handleLoginSubmit}>artık resmen hoş geldin !</button>
+          <button className='registerLoginButton' onClick={`${handleLoginChange} ${props.onLogin}`} >artık resmen hoş geldin !</button>
         </div>
 
       </form>
-    </main>
+    </div>
   )
 }
 
