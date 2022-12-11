@@ -21,6 +21,46 @@ const TitlePageTemplate = (props) => {
 
     let userid = localStorage.getItem('userId')
     let token = localStorage.getItem('token')
+
+    const [likedEntryValues, setLikedEntryValues] = useState({
+
+      likedentryid: localStorage.getItem("entryid"),
+      userid: userid
+    })
+
+    const [dislikedEntryValues, setDislikedEntryValues] = useState({
+      dislikedentryid: localStorage.getItem("entryid"),
+      userid: userid
+    })
+
+   const postLikeEntry = e => {
+    e.preventDefault();
+    axios.post("https://localhost:5001/api/entry/like", likedEntryValues).then(
+      res => {
+        console.log(res)
+      }
+    ).catch(
+      err => {
+        console.log(err)
+      }
+    )
+
+   
+   }
+
+   const postDislikeEntry = e => {
+    e.preventDefault();
+    axios.post("https://localhost:5001/api/entry/dislike", dislikedEntryValues).then(
+      res => {
+        console.log(res)
+      }
+    ).catch(
+      err => {
+        console.log(err)
+      }
+    )
+    
+   }
     const ref = useRef()
     const [entryValues, setEntryValues] = useState({
   
@@ -35,7 +75,10 @@ const TitlePageTemplate = (props) => {
       
     })
 
+ 
 
+
+    var entryMap = new Map()
 
     useEffect(() => {
 
@@ -43,6 +86,8 @@ const TitlePageTemplate = (props) => {
             res => {
                 console.log(res)
                 setEntryArray(res.data)
+               
+               
             }
         ).catch(
             err => {
@@ -115,24 +160,28 @@ const TitlePageTemplate = (props) => {
       </div>
 
         
-             {entryArray.map(entry => {
+             {entryArray.map((entry, index) => {
+
+                entryMap.set(index, entry.entryid)
+                console.log(entryMap)
+            
                 return (
 
                     <div className='entry'>
                     <div className='entryCaption'>
-                    <p>{entry.content}</p>
+                    <p>{entry.e.content}</p>
                   </div>
             
                   <div className='entryFooter'>
                     <div className='entryLikeDislike'>
-                        <p className='entryLike'><FaArrowUp /></p>
-                        <p className='entryDislike'><FaArrowDown /></p>
+                        <p className='entryLike' onClick={() => {localStorage.setItem("entryid", entry.e.entryid); console.log(localStorage.getItem("entryid"))}}><FaArrowUp onClick={postLikeEntry} /></p>
+                        <p className='entryDislike' onClick={() => {localStorage.removeItem("entryid"); localStorage.setItem("entryid", entry.e.entryid)}}><FaArrowDown onClick={postDislikeEntry} />{entry.dislikeCount}</p>
                    
                     </div>
             
                     <div className='entryUserInfo'>
-                        <span className='entryUserName'>{entry.user.username}</span>
-                        <span className='entryEditDate'>{entry.writedate}</span>
+                        <span className='entryUserName'>{entry.user}</span>
+                        <span className='entryEditDate'>{entry.e.writedate}</span>
                     </div>
                   </div>
                     </div>

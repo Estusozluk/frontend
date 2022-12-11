@@ -1,6 +1,7 @@
 import React from "react";
 import {FaPowerOff} from 'react-icons/fa'
 import "./Navbar.css";
+import {Link} from "react-router-dom"
 
 const NavbarLoggedIn = () => {
 
@@ -11,9 +12,12 @@ const NavbarLoggedIn = () => {
   return (
     <header>
       <div className="navigationBar">
+        <Link to='/'>
         <div className="navLogo">
+
           <p>estüsözlük</p>
         </div>
+        </Link>
 
      
 

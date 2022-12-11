@@ -32,7 +32,7 @@ const Login = (props) => {
         
         
         <div className='registerLoginButtonField loginPart'>
-          <button className='registerLoginButton' onClick={`${handleLoginChange} ${props.onLogin}`} >artık resmen hoş geldin !</button>
+          <button className='registerLoginButton' onClick={handleLoginSubmit} >artık resmen hoş geldin !</button>
         </div>
 
       </form>

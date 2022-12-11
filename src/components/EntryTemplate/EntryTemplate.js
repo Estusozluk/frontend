@@ -10,9 +10,12 @@ const EntryTemplate = (props) => {
 
   const [openPopup, setOpenPopup] = useState(false)
 
+  const [openProfile, setOpenProfile] = useState(false)
+
   const ref = useRef()
 
   let userid = localStorage.getItem('userId')
+  let userid2 = 0
   const [entryValues, setEntryValues] = useState({
 
     userid: userid,
@@ -25,6 +28,50 @@ const EntryTemplate = (props) => {
 
     
   })
+
+  const [followValues, setFollowValues] = useState({
+
+    follower: userid,
+    followed: localStorage.getItem("userid2")
+  })
+
+
+  const getUserInfo = async (e) => {
+   
+    e.preventDefault()
+
+    await axios.get("https://localhost:5001/api/User/" + props.user)
+    .then(
+      res => {
+        
+        localStorage.setItem("userid2", res.data.userid)
+
+       userid2 = res.data.userid
+       console.log(userid)
+       console.log(userid2)
+       
+      }
+    ).catch(
+      err => {
+        console.log(err)
+      }
+    )
+    setOpenProfile(true)
+  }
+
+  const Follow = e => {
+    e.preventDefault()
+    axios.post("https://localhost:5001/api/User/follow", followValues)
+    .then(
+      res => {
+        console.log(res)
+      }
+    ).catch(
+      err => {
+        console.log(err)
+      }
+    )
+  }
 
   const navigate = useNavigate()
 
@@ -100,16 +147,35 @@ const EntryTemplate = (props) => {
 
       <div className='entryFooter'>
         <div className='entryLikeDislike'>
-            <p className='entryLike'><FaArrowUp /></p>
-            <p className='entryDislike'><FaArrowDown /></p>
+            <p className='entryLike'><FaArrowUp /> {props.likes}</p>
+            <p className='entryDislike'><FaArrowDown />{props.dislikes}</p>
        
         </div>
 
         <div className='entryUserInfo'>
-            <span className='entryUserName'>{props.user}</span>
+            <span className='entryUserName' onClick={getUserInfo}>{props.user}</span>
             <span className='entryEditDate'>{props.date}</span>
         </div>
       </div>
+
+      <Popup trigger={openProfile}>
+
+        <div className='modal'>
+          <div className='overlay'>
+            <div className='modalContent'>
+              <h2>{props.user}</h2>
+              {userid === localStorage.getItem("userid2")
+              ? <p>kendi kendini takip edemesin, sacmalama !!!!</p>
+              :   <button onClick={Follow}>Takip et!</button>
+              
+            }
+            
+            </div>
+          </div>
+        </div>
+
+      </Popup>
+
       <Popup trigger={openPopup} title={props.title}>
 
       <div className='modal'>
@@ -127,7 +193,11 @@ const EntryTemplate = (props) => {
 
 </div>
 
+
+
       </Popup>
+
+
     </div>
   )
 }

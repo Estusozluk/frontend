@@ -9,6 +9,9 @@ const LandingPage = () => {
 
     const [data, setData] = useState([]);
 
+
+
+
     useEffect(() => {
         axios.get("https://localhost:5001/api/entry/landing")
             .then(res => {
@@ -22,7 +25,7 @@ const LandingPage = () => {
     return (
         <div className='entries'>
             {data.map(entry => {
-                return <EntryTemplate title={entry.value.titleData.titlename} caption={entry.value.titleData.content} user={entry.value.titleData.username} date={entry.value.titleData.writedate} />
+                return <EntryTemplate title={entry.value.titleData.titlename} caption={entry.value.titleData.content} user={entry.value.titleData.username} date={entry.value.titleData.writedate} likes={entry.value.likeCount} />
             })}
         </div>
     )
