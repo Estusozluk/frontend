@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const TitlePage = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default TitlePage
+export default TitlePage;

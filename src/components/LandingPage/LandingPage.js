@@ -1,31 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import EntryTemplate from '../EntryTemplate/EntryTemplate'
-import './LandingPage.css'
-import RequestService from '../../services/RequestService'
-
-
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import EntryTemplate from "../EntryTemplate/EntryTemplate";
+import "./LandingPage.css";
 
 const LandingPage = () => {
+  const [data, setData] = useState([]);
 
-    const [data, setData] = useState([]);
+  useEffect(() => {
+    axios.get("https://localhost:5000/api/entry/landing").then((res) => {
+      console.log(res.data);
+      setData(res.data);
+    });
+  }, []);
 
-    useEffect(() => {
-        RequestService.get("/api/entry/landing")
-            .then(res => {
-                    console.log(res.data);
-                    setData(res.data)
-                }
-            )
-    }, []);
+  return (
+    <div className="entries">
+      {data.map((entry) => {
+        return (
+          <EntryTemplate
+            title={entry.value.titleData.titlename}
+            caption={entry.value.titleData.content}
+            user={entry.value.titleData.username}
+            date={entry.value.titleData.writedate}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
-
-    return (
-        <div className='entries'>
-            {data.map(entry => {
-                return <EntryTemplate title={entry.value.titleData.titlename} caption={entry.value.titleData.content} />
-            })}
-        </div>
-    )
-}
-
-export default LandingPage
+export default LandingPage;

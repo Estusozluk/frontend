@@ -7,7 +7,7 @@ const Register = () => {
   const {handleChange, handleRegisterSubmit, validateInfo, registerValues} = useForm();
   
   return (
-    <main>
+    <div className='register'>
 
 
      
@@ -22,7 +22,7 @@ const Register = () => {
 
 
         <label for="username">şifre</label>
-        <input type='text' className='registerLoginInput' placeholder="güçlü ve unutulmayacak bir şifre seç..." name='password' onChange={handleChange} value={registerValues.password} />
+        <input type='password' className='registerLoginInput' placeholder="güçlü ve unutulmayacak bir şifre seç..." name='password' onChange={handleChange} value={registerValues.password} />
 
         <p className='passwordConditions'>şifre kuralları:
 
@@ -36,7 +36,7 @@ const Register = () => {
         </div>
 
       </form>
-    </main>
+    </div>
   )
 }
 

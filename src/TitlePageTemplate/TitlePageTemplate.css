@@ -1,13 +1,35 @@
-*{
-
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
+.titlePage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: scroll;
+  background-color: antiquewhite;
+}
 
-.titlePage{
+.titlePageTitle .titlePageTitleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow-y: scroll;
+.enterEntry {
+  width: 300px;
+  height: 2em;
+  display: flex;
+  text-align: center;
+  justify-items: center;
+  justify-content: center;
+  font-size: 1.25em;
+  background-color: rgb(240, 225, 205);
+  box-shadow: 0 1px 1px 1px;
+}
+
+.enterEntry:hover {
+  border: 3px solid rgb(240, 225, 205);
+  background-color: antiquewhite;
+  cursor: pointer;
 }

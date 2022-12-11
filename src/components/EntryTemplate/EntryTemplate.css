@@ -1,91 +1,79 @@
 * {
-
-    box-sizing: border-box;
-    
+  box-sizing: border-box;
 }
 
-.entry{
-    background-color: rgb(240, 225, 205);
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    text-align: start;
-    margin-left: 4%;
-    margin-top: 3%;
-    margin-right: 4%;
-    padding: 2%;
-    border-radius: 25px;
-    
-
+.entry {
+  background-color: rgb(240, 225, 205);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+  margin-left: 4%;
+  margin-top: 3%;
+  margin-right: 4%;
+  padding: 2%;
+  border-radius: 25px;
 }
 
-.entry .entryTitle .entryTitleContainer{
-    display: flex;
-    flex-direction: row;
-    margin: -20px;
+.entry .entryTitle .entryTitleContainer {
+  display: flex;
+  flex-direction: row;
+  margin: -20px;
 }
 
-.entry .entryTitle{
-    display: flex;
-    justify-content: space-around;
-    text-align: start;
-    font-size: 1.3rem;
-    text-decoration: underline;
-    margin: 0;
-    flex-direction: row;
-    cursor: pointer;
+.entry .entryTitle {
+  display: flex;
+  justify-content: space-around;
+  text-align: start;
+  font-size: 1.3rem;
+  text-decoration: underline;
+  margin: 0;
+  flex-direction: row;
+  cursor: pointer;
+}
+.entry .entryTitle:hover {
+  color: rgba(0, 0, 0, 0.711);
 }
 
-.entry .entryCaption{
-    font-size: 0.95rem;
-    word-wrap: break-word;
-    
-    line-height: 10px;
+.entry .entryCaption {
+  font-size: 0.95rem;
+  word-wrap: break-word;
+
+  line-height: 10px;
 }
 
-.entry .entryLikeDislike{
-    display: flex;
-    flex-flow: row;
-    font-size: 1.2rem;
-
+.entry .entryLikeDislike {
+  display: flex;
+  flex-flow: row;
+  font-size: 1.2rem;
 }
 
 .entryLike + .entryDislike {
-
-   margin-left: 25px;
-   
+  margin-left: 25px;
 }
 
-
-.entryDislike + .enterEntry{
-
-    margin-left: 25px;
+.entryDislike + .enterEntry {
+  margin-left: 25px;
 }
 
-
-
-.entryUserInfo{
-    display: flex;
+.entryUserInfo {
+  display: flex;
 }
 
-.entryFooter{
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.entryFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-
-
-.entryFooter > .entryLikeDislike > .entryUserInfo{
-
-    justify-content: space-between;
+.entryFooter > .entryLikeDislike > .entryUserInfo {
+  justify-content: space-between;
 }
 
-.entryUserInfo{
-    display: flex;
-    flex-direction: column;
-    font-size: 0.8rem;
-   
-    right: 60px;
+.entryUserInfo {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+
+  right: 60px;
 }
