@@ -24,6 +24,7 @@ function App() {
   const user = useSelector(selectUser);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState("");
   const getTokenInfo = localStorage.getItem("token");
 
   useEffect(() => {

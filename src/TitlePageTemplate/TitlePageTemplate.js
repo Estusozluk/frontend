@@ -7,7 +7,7 @@ import { FaArrowDown } from 'react-icons/fa'
 import {IoMdAddCircle} from 'react-icons/io'
 
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import EntryTemplate from '../components/EntryTemplate/EntryTemplate';
 import Popup from '../components/Popup/Popup';
 
@@ -16,11 +16,17 @@ const TitlePageTemplate = (props) => {
     const location = useLocation();
     const {title} = location.state;
 
-    const [entryArray, setEntryArray] = useState([])
-    const [openPopup, setOpenPopup] = useState(false)
+    const [entryArray, setEntryArray] = useState([]);
+    const [openPopup, setOpenPopup] = useState(false);
+
+    const [openProfile, setOpenProfile] = useState(false);
 
     let userid = localStorage.getItem('userId')
     let token = localStorage.getItem('token')
+    let userid2 = 0;
+
+    const [booleanCheck, setBooleanCheck] = useState(false)
+    
 
     const [likedEntryValues, setLikedEntryValues] = useState({
 
@@ -28,35 +34,160 @@ const TitlePageTemplate = (props) => {
       userid: userid
     })
 
+    const [entryIsLiked, setEntryIsLiked] = useState(false);
+
+    const [entryIsDisliked, setEntryIsDisliked] = useState(false);
+
+    const [userToBeFollowed, setUserToBeFollowed] = useState("");
+
     const [dislikedEntryValues, setDislikedEntryValues] = useState({
       dislikedentryid: localStorage.getItem("entryid"),
       userid: userid
     })
 
-   const postLikeEntry = e => {
+    const getUserInfo =  async (e, user) => {
+      setUserToBeFollowed(user)
+      e.preventDefault();
+       await axios.get("https://localhost:5001/api/User/" + user)
+        .then((res) => {
+         
+  
+          userid2 = res.data.userid
+  
+          
+  
+          console.log(parseInt(userid))
+          console.log(parseInt(userid2))
+  
+          if(parseInt(userid) === parseInt(userid2)){
+  
+            setBooleanCheck(true)
+          }
+          else{
+            setBooleanCheck(false)
+          }
+         
+         
+        
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setOpenProfile(!openProfile);
+    };
+
+    const Follow = (e) => {
+      e.preventDefault();
+      axios
+        .post("https://localhost:5001/api/User/follow", {
+          follower: userid,
+          followed: userid2
+        }, {
+  
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : 'http://localhost:3000/',
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+            "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+            'Authorization': 'Bearer '+ token
+          }
+          
+        } )
+        .then((res) => {
+          console.log(res);
+          if(res.status === 200){
+            alert("bu kişiyi artık takip ediyorsunuz")
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if(err.response.status === 401){
+  
+            alert("giriş yapmadınız galiba?!")
+          }
+        });
+    };
+
+
+    useEffect(() => {
+
+      axios.get("https://localhost:5001/api/entry/" + title).then(
+          res => {
+              console.log(res)
+              setEntryArray(res.data)
+             
+             
+          }
+      ).catch(
+          err => {
+              console.log(err)
+          }
+      )
+  }, [title, openPopup, entryIsLiked, entryIsDisliked])
+
+   const postLikeEntry = (e, entryid) => {
+    console.log(e)
+    console.log(entryid)
     e.preventDefault();
-    axios.post("https://localhost:5001/api/entry/like", likedEntryValues).then(
+    axios.post("https://localhost:5001/api/entry/like", {
+      likedentryid: entryid,
+      userid: userid
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+        'Authorization': 'Bearer '+ token
+      }
+    }).then(
       res => {
         console.log(res)
+
+        if(res.status === 200){
+          setEntryIsLiked(!entryIsLiked)
+        }
       }
     ).catch(
       err => {
         console.log(err)
+        if(err.response.status === 401){
+          alert("giriş yapmadınız galiba ?!")
+          
+        }
       }
     )
 
    
    }
 
-   const postDislikeEntry = e => {
+   const postDislikeEntry = (e, entryid) => {
     e.preventDefault();
-    axios.post("https://localhost:5001/api/entry/dislike", dislikedEntryValues).then(
+    axios.post("https://localhost:5001/api/entry/dislike", {
+      dislikedentryid: entryid,
+      userid: userid
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+        'Authorization': 'Bearer '+ token
+      }
+    }).then(
       res => {
         console.log(res)
+        if(res.status === 200){
+          setEntryIsDisliked(!entryIsDisliked)
+        }
       }
     ).catch(
       err => {
         console.log(err)
+        if(err.response.status === 401){
+          alert("giriş yapmadınız galiba ?!")
+          
+        }
       }
     )
     
@@ -80,21 +211,6 @@ const TitlePageTemplate = (props) => {
 
     var entryMap = new Map()
 
-    useEffect(() => {
-
-        axios.get("https://localhost:5001/api/entry/" + title).then(
-            res => {
-                console.log(res)
-                setEntryArray(res.data)
-               
-               
-            }
-        ).catch(
-            err => {
-                console.log(err)
-            }
-        )
-    }, [title, openPopup])
 
 
   const handleEntryValues = e => {
@@ -111,7 +227,7 @@ const TitlePageTemplate = (props) => {
 
 
 
-  const handleEntryPost = e => {
+  const handleEntryPost = (e, entry) => {
     e.preventDefault();
 
     if(ref.current.value.trim().length <= 0){
@@ -162,8 +278,8 @@ const TitlePageTemplate = (props) => {
         
              {entryArray.map((entry, index) => {
 
-                entryMap.set(index, entry.entryid)
-                console.log(entryMap)
+               
+              
             
                 return (
 
@@ -174,13 +290,13 @@ const TitlePageTemplate = (props) => {
             
                   <div className='entryFooter'>
                     <div className='entryLikeDislike'>
-                        <p className='entryLike' onClick={() => {localStorage.setItem("entryid", entry.e.entryid); console.log(localStorage.getItem("entryid"))}}><FaArrowUp onClick={postLikeEntry} /></p>
-                        <p className='entryDislike' onClick={() => {localStorage.removeItem("entryid"); localStorage.setItem("entryid", entry.e.entryid)}}><FaArrowDown onClick={postDislikeEntry} />{entry.dislikeCount}</p>
+                        <p className='entryLike' onClick={(e) => postLikeEntry(e, entry.e.entryid)}><FaArrowUp /> {entry.likeCount}</p>
+                        <p className='entryDislike' onClick={(e) => postDislikeEntry(e, entry.e.entryid) }><FaArrowDown />{entry.dislikeCount}</p>
                    
                     </div>
             
                     <div className='entryUserInfo'>
-                        <span className='entryUserName'>{entry.user}</span>
+                        <span className='entryUserName' onClick={(e) => getUserInfo(e, entry.user)}>{entry.user}</span>
                         <span className='entryEditDate'>{entry.e.writedate}</span>
                     </div>
                   </div>
@@ -208,6 +324,21 @@ const TitlePageTemplate = (props) => {
 </div>
 
 </Popup>
+
+<Popup trigger={openProfile}>
+        <div className="modal">
+          <div className="overlay">
+            <div className="modalContent">
+              <h2>{userToBeFollowed}</h2>
+              {booleanCheck ? (
+                <p>kendi kendini takip edemesin, sacmalama !!!!</p>
+              ) : (
+                <button onClick={Follow}>Takip et!</button>
+              )}
+            </div>
+          </div>
+        </div>
+      </Popup>
 
 
     </div>

@@ -115,31 +115,27 @@ const useForm = () => {
         localStorage.setItem("following", res.data.followedCount);
         localStorage.setItem("badies", res.data.badieCount);
 
-        
         console.log(localStorage.getItem("follower"));
         let token = localStorage.getItem("token");
-        if (token != null) {
-            setIsLoggedIn(true)
-        
-          }
-
-       
+        if (token !== null) {
+          setIsLoggedIn(true);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  if(isLoggedIn){
+  if (isLoggedIn) {
     dispatch(
-        login({
-          username: loginValues.username,
-          password: loginValues.password,
-          loggedIn: setIsLoggedIn(true)
-        })
-      );
-     
-      navigate("/profile");
+      login({
+        username: loginValues.username,
+        password: loginValues.password,
+        loggedIn: setIsLoggedIn(true),
+      })
+    );
+
+    navigate("/profile");
   }
 
   return {

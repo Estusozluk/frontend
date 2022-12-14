@@ -1,42 +1,54 @@
 import React from "react";
-import {FaPowerOff} from 'react-icons/fa'
+import { FaPowerOff } from "react-icons/fa";
 import "./Navbar.css";
-import {Link} from "react-router-dom"
+import { BsFillPersonFill } from "react-icons/bs";
+import { BiPowerOff } from "react-icons/bi";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const NavbarLoggedIn = () => {
+  const [userName, setUserName] = useState(localStorage.getItem("username"));
 
-  function removeToken(){
+  const logoutHandler = () => {
+    let logoutConfirmed = window.confirm("Gerçekten terk mi edeceksin beni ?");
+    console.log(logoutConfirmed);
+    if (logoutConfirmed === false) {
+      alert("Canımsın <333");
+      return;
+    }
+    localStorage.clear();
+    window.location.reload();
+  };
 
-    localStorage.removeItem('token')
-  }
   return (
     <header>
       <div className="navigationBar">
-        <Link to='/'>
         <div className="navLogo">
-
-          <p>estüsözlük</p>
+          <Link to="/">
+            <p>estüsözlük</p>
+          </Link>
         </div>
-        </Link>
+        <div className="searchBar">
+          <input
+            type="text"
+            className="searchInput"
+            placeholder="Search for entry titles"
+          />
+        </div>
 
-     
+        <div className="bottomBar">
+          <Link to="/profile">
+            <i>
+              {userName}
+              <BsFillPersonFill />
+            </i>
+          </Link>
 
-        <nav className="bottomBar">
-          <ul>
-            <li>
-            <div>
-              <li>merhaba, ardi jorganxhi</li>
-            </div>
-            </li>
-            
-          
-          </ul>
-          <ul>
-          <li>
-            <FaPowerOff onClick={removeToken} />
-            </li>
-          </ul>
-        </nav>
+          <i>
+            <BiPowerOff onClick={logoutHandler} />
+          </i>
+        </div>
       </div>
     </header>
   );

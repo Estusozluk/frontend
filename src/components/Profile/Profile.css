@@ -1,84 +1,78 @@
 * {
-
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .userInformations {
+  display: flex;
 
-    display: flex;
-
-    flex-direction: column;
-    margin: 0;
-    overflow-y: auto;
-    width: 100%;
-    background-color: antiquewhite;
-
+  flex-direction: column;
+  margin: 0;
+  overflow-y: auto;
+  width: 100%;
+  background-color: antiquewhite;
 }
 
 .headerInformations {
-
-    display: flex;
-    flex-direction: row;
-    padding-left: 250px;
+  display: flex;
+  flex-direction: row;
+  padding-left: 250px;
 }
 
 .username {
-
-    padding-top: 100px;
+  padding-top: 100px;
 }
 
 .userName {
-
-    display: flex;
-    justify-content: start;
+  display: flex;
+  justify-content: start;
 }
 
 .userAvatar {
-
-    font-size: 6rem;
-    float: right;
-
-
+  font-size: 6rem;
+  float: right;
 }
 
 .otherInformations {
-
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-.otherInformations p+p {
-
-    margin-left: 200px;
+.otherInformations p + p {
+  margin-left: 200px;
 }
 
 .footerInfo {
+  display: flex;
+  justify-content: space-evenly;
 
-    display: flex;
-    justify-content: start;
-
-    flex-direction: column;
-
-
+  flex-direction: row;
 }
 
-
 .footerInfo h1 {
+  text-align: center;
+}
 
-    text-align: start;
-    padding-left: 200px;
+.footerTitle {
+  cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 1px solid transparent;
+}
+.footerTitle:hover {
+  background-color: rgb(168, 146, 118);
+}
+.footerTitle:active {
+  border: 1px solid rgb(168, 146, 118);
+  background-color: antiquewhite;
 }
 
 .footerTitleHorizontal {
-
-   width: 91%;
-
+  width: 91%;
 }
 
 .userEntries {
-
-    display: flex;
-    flex-direction: column;
-    float: left;
-    padding-left: 80px;
+  display: flex;
+  flex-direction: column;
+  float: left;
+  padding-left: 80px;
 }

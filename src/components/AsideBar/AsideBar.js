@@ -49,7 +49,7 @@ const AsideBar = () => {
 
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default AsideBar
+export default AsideBar;

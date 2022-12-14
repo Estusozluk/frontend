@@ -29,7 +29,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <div className="bottomBar">
+        <div className="topics">
           <div>#gündem</div>
           <div>#spor</div>
           <div>#siyaset</div>
@@ -38,20 +38,15 @@ const Navbar = () => {
         </div>
 
         <nav className="topBar">
-          {console.log("değer = " + isLoggedIn)}
-          {isLoggedIn ? (
-            "Logged in canım"
-          ) : (
-            <React.Fragment>
-              <Link to="/login">
-                <div>giriş</div>
-              </Link>
+          <React.Fragment>
+            <Link to="/login">
+              <div>giriş</div>
+            </Link>
 
-              <Link to="/register">
-                <div>kayıt ol</div>
-              </Link>
-            </React.Fragment>
-          )}
+            <Link to="/register">
+              <div>kayıt ol</div>
+            </Link>
+          </React.Fragment>
         </nav>
       </div>
     </header>
