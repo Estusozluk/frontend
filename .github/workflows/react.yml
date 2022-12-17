@@ -1,0 +1,57 @@
+name: EstuSozluk-Frontend
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        #cache: 'npm'
+
+    - name: install react
+      run: npm install
+
+    - name: create dotenv file
+      run: touch .env
+
+    - name: write baseurl to dotenv file
+      run: echo REACT_APP_baseUrl = https://api.solarproject.click > .env
+      
+    - name: look current files
+      run: ls
+      
+    - name: look content of dotenv
+      run: cat .env
+
+    - name: build react
+      run: npm run build
+      env:
+        CI: false
+
+    - name: 📂 Sync files
+      # if: ${{ github.ref == 'refs/heads/main' }}
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: ${{ secrets.FTPSERVER }}
+        username: ${{ secrets.FTPNAME }}
+        password: ${{ secrets.FTPPASSWORD }}
+        local-dir: build/
+        server-dir: httpdocs/
+        timeout: 90000
+        # exclude: |
+        #  appsettings.json
