@@ -1,46 +1,57 @@
-import React from 'react'
+import React from "react";
+import { FaPowerOff } from "react-icons/fa";
+import "./Navbar.css";
+import { BsFillPersonFill } from "react-icons/bs";
+import { BiPowerOff } from "react-icons/bi";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const NavbarLoggedIn = () => {
-  
-    return (
-    
-        <header>
-          <div className='navigationBar'>
-          <div className='navLogo'>
+  const [userName, setUserName] = useState(localStorage.getItem("username"));
+
+  const logoutHandler = () => {
+    let logoutConfirmed = window.confirm("Gerçekten terk mi edeceksin beni ?");
+    console.log(logoutConfirmed);
+    if (logoutConfirmed === false) {
+      alert("Canımsın <333");
+      return;
+    }
+    localStorage.clear();
+    window.location.reload();
+  };
+
+  return (
+    <header>
+      <div className="navigationBar">
+        <div className="navLogo">
+          <Link to="/">
             <p>estüsözlük</p>
-          </div>
-    
-          <nav className='topBar'>
-                   
-          <ul>
-    
-    
-    
-    
-    
-    
-    <div>
-    
-        <li>merhaba, ardi jorganxhi</li>
-    
-    </div>
-    
-    </ul>
-          </nav>
-    
-          <nav className='bottomBar'>
-            <ul>
-              <li>#gündem</li>
-              <li>#spor</li>
-              <li>#siyaset</li>
-              <li>#teknoloji</li>
-              <li>#estü</li>
-            </ul>
-          </nav>
-          </div>
-        </header>
-    )
-}
+          </Link>
+        </div>
+        <div className="searchBar">
+          <input
+            type="text"
+            className="searchInput"
+            placeholder="Search for entry titles"
+          />
+        </div>
 
+        <div className="bottomBar">
+          <Link to="/profile">
+            <i>
+              {userName}
+              <BsFillPersonFill />
+            </i>
+          </Link>
 
-export default NavbarLoggedIn
+          <i>
+            <BiPowerOff onClick={logoutHandler} />
+          </i>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default NavbarLoggedIn;

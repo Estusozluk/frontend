@@ -1,9 +1,9 @@
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
-.entries{
-    background-color: antiquewhite;
-    overflow-y: scroll;
-    width: 100%;
+.entries {
+  background-color: antiquewhite;
+  overflow-y: scroll;
+  width: 100%;
 }
