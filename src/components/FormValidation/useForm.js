@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { Router } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../features/userSlice";
+import ErrorModal from "../UI/ErrorModal/ErrorModal";
 
 const useForm = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const useForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState();
 
   const navigate = useNavigate();
 
@@ -74,7 +76,7 @@ const useForm = () => {
     setIsSubmitting(true);
 
     axios
-      .post("https://localhost:5001/api/User", registerValues, {
+      .post("https://localhost:5000/api/User", registerValues, {
         headers: {
           "Access-Control-Allow-Origin": "http://localhost:3000/",
           "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
@@ -85,7 +87,11 @@ const useForm = () => {
         console.log(res);
 
         if (res.status === 200) {
-          alert("Başarıyla kayıt oldunuz!");
+          setError({
+            title: "İşlem başarılı",
+            message: "Başarıyla kayıt oldunuz",
+          });
+          //alert("Başarıyla kayıt oldunuz!");
           navigate("/login");
         }
       })
@@ -99,7 +105,7 @@ const useForm = () => {
     setIsSubmitting(true);
 
     await axios
-      .post("https://localhost:5001/api/User/login", loginValues, {
+      .post("https://localhost:5000/api/User/login", loginValues, {
         headers: {
           "Access-Control-Allow-Origin": "http://localhost:3000/",
           "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
@@ -147,6 +153,8 @@ const useForm = () => {
     registerValues,
     loginValues,
     isLoggedIn,
+    error,
+    setError,
   };
 };
 

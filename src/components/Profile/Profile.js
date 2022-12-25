@@ -7,10 +7,6 @@ import "./Profile.css";
 const Profile = () => {
   const [data, setData] = useState([]);
 
-  const [likedArray, setLikedArray] = useState([]);
-
-  const [dislikedArray, setDislikedArray] = useState([]);
-
   let userid = localStorage.getItem("userId");
   let username = localStorage.getItem("username");
   let follower = localStorage.getItem("follower");
@@ -20,38 +16,10 @@ const Profile = () => {
   const [contentTobeDisplayed, setContentTobeDisplayed] = useState();
 
   useEffect(() => {
-    axios.get("https://localhost:5001/api/entry/user/" + userid).then((res) => {
-      
+    axios.get("https://localhost:5000/api/entry/user/" + userid).then((res) => {
+      console.log(res.data);
       setData(res.data);
-      
-      
-      
     });
-
-    axios.get("https://localhost:5001/api/entry/user/liked/" + userid)
-    .then(
-      res => {
-        console.log(res);
-        setLikedArray(res.data);
-        console.log(likedArray)
-      }
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
-
-    axios.get("https://localhost:5001/api/entry/user/disliked/" + userid)
-    .then(
-      res => {
-        console.log(res);
-        setDislikedArray(res.data);
-      }
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
   }, []);
 
   const showEnteredEntries = () => {
@@ -68,22 +36,20 @@ const Profile = () => {
   const showLikedEntries = () => {
     setContentTobeDisplayed(
       <div>
-        {likedArray.map((entry) => {
-          return (
-            <EntryTemplate title={entry.titlename} caption={entry.content} />
-          );
-        })}
+        <EntryTemplate
+          title={"Liked Entryyy"}
+          caption="Gandalf Dumbledora tek atar"
+        />
       </div>
     );
   };
   const showDislikedEntries = () => {
     setContentTobeDisplayed(
       <div>
-        {dislikedArray.map((entry) => {
-          return (
-            <EntryTemplate title={entry.titlename} caption={entry.content} />
-          );
-        })}
+        <EntryTemplate
+          title={"Disliked Entryyy"}
+          caption="Harry Potter > Lord of The Rings"
+        />
       </div>
     );
   };
@@ -108,15 +74,15 @@ const Profile = () => {
 
       <div className="footerInfo">
         <div onClick={showEnteredEntries} className="footerTitle">
-          <h2>girilen entryler</h2>
+          <h1>girilen entryler</h1>
           <hr className="footerTitleHorizontal"></hr>
         </div>
         <div onClick={showLikedEntries} className="footerTitle">
-          <h2>Beğenilen entryler</h2>
+          <h1>Beğenilen entryler</h1>
           <hr className="footerTitleHorizontal"></hr>
         </div>
         <div onClick={showDislikedEntries} className="footerTitle">
-          <h2>Begenilmeyen entryler</h2>
+          <h1>girilen entryler</h1>
           <hr className="footerTitleHorizontal"></hr>
         </div>
       </div>

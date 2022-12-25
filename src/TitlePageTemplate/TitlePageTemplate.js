@@ -1,348 +1,212 @@
+import React, { useEffect, useState, useRef } from "react";
+import "../components/EntryTemplate/EntryTemplate.css";
+import "./TitlePageTemplate.css";
+import { FaArrowUp } from "react-icons/fa";
+import { FaArrowDown } from "react-icons/fa";
+import { IoMdAddCircle } from "react-icons/io";
 
-import React, {useEffect, useState, useRef} from 'react'
-import '../components/EntryTemplate/EntryTemplate.css'
-import './TitlePageTemplate.css'
-import { FaArrowUp } from 'react-icons/fa';
-import { FaArrowDown } from 'react-icons/fa'
-import {IoMdAddCircle} from 'react-icons/io'
-
-import axios from 'axios';
-import { Navigate, useLocation } from 'react-router-dom';
-import EntryTemplate from '../components/EntryTemplate/EntryTemplate';
-import Popup from '../components/Popup/Popup';
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import EntryTemplate from "../components/EntryTemplate/EntryTemplate";
+import Popup from "../components/Popup/Popup";
+import useForm from "../components/FormValidation/useForm";
+import ErrorModal from "../components/UI/ErrorModal/ErrorModal";
 
 const TitlePageTemplate = (props) => {
+  const location = useLocation();
+  const { title } = location.state;
 
-    const location = useLocation();
-    const {title} = location.state;
+  const [entryArray, setEntryArray] = useState([]);
+  const [error, setError] = useState();
+  const [openPopup, setOpenPopup] = useState(false);
 
-    const [entryArray, setEntryArray] = useState([]);
-    const [openPopup, setOpenPopup] = useState(false);
+  let userid = localStorage.getItem("userId");
+  let token = localStorage.getItem("token");
+  const ref = useRef();
+  const [entryValues, setEntryValues] = useState({
+    userid: userid,
+    titlename: title,
+    content: "",
+  });
 
-    const [openProfile, setOpenProfile] = useState(false);
+  function checkUserLoggedIn() {
+    console.log(token);
+    if (token === null) {
+      setError({
+        title: "Başarısız işlem",
+        message: "E hani giriş yapmamışsın ki",
+      });
+      //alert("Giriş yapar mısın canım :))");
+      return;
+    } else {
+      setOpenPopup(!openPopup);
+    }
+  }
 
-    let userid = localStorage.getItem('userId')
-    let token = localStorage.getItem('token')
-    let userid2 = 0;
+  useEffect(() => {
+    axios
+      .get("https://localhost:5000/api/entry/" + title)
+      .then((res) => {
+        console.log(res);
+        setEntryArray(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [title, openPopup]);
 
-    const [booleanCheck, setBooleanCheck] = useState(false)
-    
-
-    const [likedEntryValues, setLikedEntryValues] = useState({
-
-      likedentryid: localStorage.getItem("entryid"),
-      userid: userid
-    })
-
-    const [entryIsLiked, setEntryIsLiked] = useState(false);
-
-    const [entryIsDisliked, setEntryIsDisliked] = useState(false);
-
-    const [userToBeFollowed, setUserToBeFollowed] = useState("");
-
-    const [dislikedEntryValues, setDislikedEntryValues] = useState({
-      dislikedentryid: localStorage.getItem("entryid"),
-      userid: userid
-    })
-
-    const getUserInfo =  async (e, user) => {
-      setUserToBeFollowed(user)
-      e.preventDefault();
-       await axios.get("https://localhost:5001/api/User/" + user)
-        .then((res) => {
-         
-  
-          userid2 = res.data.userid
-  
-          
-  
-          console.log(parseInt(userid))
-          console.log(parseInt(userid2))
-  
-          if(parseInt(userid) === parseInt(userid2)){
-  
-            setBooleanCheck(true)
-          }
-          else{
-            setBooleanCheck(false)
-          }
-         
-         
-        
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      setOpenProfile(!openProfile);
-    };
-
-    const Follow = (e) => {
-      e.preventDefault();
-      axios
-        .post("https://localhost:5001/api/User/follow", {
-          follower: userid,
-          followed: userid2
-        }, {
-  
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-            "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-            'Authorization': 'Bearer '+ token
-          }
-          
-        } )
-        .then((res) => {
-          console.log(res);
-          if(res.status === 200){
-            alert("bu kişiyi artık takip ediyorsunuz")
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if(err.response.status === 401){
-  
-            alert("giriş yapmadınız galiba?!")
-          }
-        });
-    };
-
-
-    useEffect(() => {
-
-      axios.get("https://localhost:5001/api/entry/" + title).then(
-          res => {
-              console.log(res)
-              setEntryArray(res.data)
-             
-             
-          }
-      ).catch(
-          err => {
-              console.log(err)
-          }
-      )
-  }, [title, openPopup, entryIsLiked, entryIsDisliked])
-
-   const postLikeEntry = (e, entryid) => {
-    console.log(e)
-    console.log(entryid)
-    e.preventDefault();
-    axios.post("https://localhost:5001/api/entry/like", {
-      likedentryid: entryid,
-      userid: userid
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-        'Authorization': 'Bearer '+ token
-      }
-    }).then(
-      res => {
-        console.log(res)
-
-        if(res.status === 200){
-          setEntryIsLiked(!entryIsLiked)
-        }
-      }
-    ).catch(
-      err => {
-        console.log(err)
-        if(err.response.status === 401){
-          alert("giriş yapmadınız galiba ?!")
-          
-        }
-      }
-    )
-
-   
-   }
-
-   const postDislikeEntry = (e, entryid) => {
-    e.preventDefault();
-    axios.post("https://localhost:5001/api/entry/dislike", {
-      dislikedentryid: entryid,
-      userid: userid
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-        'Authorization': 'Bearer '+ token
-      }
-    }).then(
-      res => {
-        console.log(res)
-        if(res.status === 200){
-          setEntryIsDisliked(!entryIsDisliked)
-        }
-      }
-    ).catch(
-      err => {
-        console.log(err)
-        if(err.response.status === 401){
-          alert("giriş yapmadınız galiba ?!")
-          
-        }
-      }
-    )
-    
-   }
-    const ref = useRef()
-    const [entryValues, setEntryValues] = useState({
-  
-      userid: userid,
-      titlename: title,
-      content: ''
-  
-      
-  
-  
-  
-      
-    })
-
- 
-
-
-    var entryMap = new Map()
-
-
-
-  const handleEntryValues = e => {
-
-
-    const {name, value} = e.target;
+  const handleEntryValues = (e) => {
+    const { name, value } = e.target;
 
     setEntryValues({
       ...entryValues,
-      [name]: value
-    })
+      [name]: value,
+    });
+  };
 
-  }
+  const confirm = () => {
+    setError(null);
+  };
 
-
-
-  const handleEntryPost = (e, entry) => {
+  const handleEntryPost = (e) => {
     e.preventDefault();
 
-    if(ref.current.value.trim().length <= 0){
-      alert("Entry boş olamaz, lütfen entry giriniz!")
+    if (ref.current.value.trim().length <= 0) {
+      setError({
+        title: "Geçersiz değer",
+        message: "Entry boş olamaz, lütfen entry giriniz !",
+      });
+      setOpenPopup(false);
+      return;
+      //alert("Entry boş olamaz, lütfen entry giriniz!");
     }
 
-    axios.post('https://localhost:5001/api/entry/', entryValues, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-        'Authorization': 'Bearer '+ token
-      }
-    }).then(
-      res => {
-        console.log(res)
+    axios
+      .post("https://localhost:5000/api/entry/", entryValues, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000/",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+          "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
 
-        if(res.status === 200){
+        if (res.status === 200) {
+          setError({
+            title: "İşlem başarılı",
+            message: "Entry'ni girdin :)",
+          });
 
-          alert("Entry'niz başarıyla iletildi!")
-          setOpenPopup(false)
+          //alert("Entry'niz başarıyla iletildi!");
+          setOpenPopup(false);
+        } else {
+          setError({
+            title: "İşlem başarısız",
+            message: "Entry girilemedi be kanks :(",
+          });
+          //alert("Entry girilemedi, lutfen tekrar deneyiniz!");
+          setOpenPopup(false);
         }
-        else{
-          alert("Entry girilemedi, lutfen tekrar deneyiniz!")
-          setOpenPopup(false)
-        }
-      }
-    ).err(
-      err => {
-        console.log(err)
-      }
-    )
-  }
+      })
+      .err((err) => {
+        console.log(err);
+      });
+  };
   return (
-    
-    <div className='titlePage'>
-
-<div className='titlePageTitle'>
-        <div className='titlePageTitleContainer'>
-        <h2>{title}</h2>
-        <p className='enterEntry' onClick={() => setOpenPopup(!openPopup)}><IoMdAddCircle /></p>
+    <div className="titlePage">
+      {error && (
+        <ErrorModal
+          title="Başarısız işlem"
+          message="E hani giriş yapmamışsın "
+          confirm={confirm}
+        />
+      )}
+      <div className="titlePageTitle">
+        <div className="titlePageTitleContainer">
+          <div
+            className="enterEntry"
+            style={{
+              textAlign: "center",
+              alignItems: "center",
+              marginTop: "7px",
+            }}
+            onClick={checkUserLoggedIn}
+          >
+            <IoMdAddCircle style={{ fontSize: "35px" }} />
+            Entry Oluştur
+          </div>
+          <h2>{title}</h2>
         </div>
-        
-
       </div>
 
-        
-             {entryArray.map((entry, index) => {
+      {entryArray.map((entry) => {
+        return (
+          <div className="entry">
+            <div className="entryCaption">
+              <p>{entry.content}</p>
+            </div>
 
-               
-              
-            
-                return (
+            <div className="entryFooter">
+              <div className="entryLikeDislike">
+                <p className="entryLike">
+                  <FaArrowUp />
+                </p>
+                <p className="entryDislike">
+                  <FaArrowDown />
+                </p>
+              </div>
 
-                    <div className='entry'>
-                    <div className='entryCaption'>
-                    <p>{entry.e.content}</p>
-                  </div>
-            
-                  <div className='entryFooter'>
-                    <div className='entryLikeDislike'>
-                        <p className='entryLike' onClick={(e) => postLikeEntry(e, entry.e.entryid)}><FaArrowUp /> {entry.likeCount}</p>
-                        <p className='entryDislike' onClick={(e) => postDislikeEntry(e, entry.e.entryid) }><FaArrowDown />{entry.dislikeCount}</p>
-                   
-                    </div>
-            
-                    <div className='entryUserInfo'>
-                        <span className='entryUserName' onClick={(e) => getUserInfo(e, entry.user)}>{entry.user}</span>
-                        <span className='entryEditDate'>{entry.e.writedate}</span>
-                    </div>
-                  </div>
-                    </div>
-
-
-                )
-            })}
-        
-        <Popup trigger={openPopup} title={title}>
-
-<div className='modal'>
-
-<div className='overlay'>
-<div className='modalContent'>
-  <h2>{title}</h2>
-  <input type="text" placeholder='entry giriniz...' name='content' ref={ref} value={entryValues.content} onChange={handleEntryValues} className='captionEnter' required />
-  <button className='closeModal'  onClick={() => setOpenPopup(false)}>Close</button>
-  <button className='enterYourEntry' onClick={handleEntryPost}>entry gir</button>
-  
-</div>
-
-</div>
-
-</div>
-
-</Popup>
-
-<Popup trigger={openProfile}>
+              <div className="entryUserInfo">
+                <span className="entryUserName">{entry.user.username}</span>
+                <span className="entryEditDate">{entry.writedate}</span>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+      {error && (
+        <ErrorModal
+          confirm={confirm}
+          title={error.title}
+          message={error.message}
+        />
+      )}
+      <Popup trigger={openPopup} title={title}>
         <div className="modal">
           <div className="overlay">
             <div className="modalContent">
-              <h2>{userToBeFollowed}</h2>
-              {booleanCheck ? (
-                <p>kendi kendini takip edemesin, sacmalama !!!!</p>
-              ) : (
-                <button onClick={Follow}>Takip et!</button>
-              )}
+              <h2>{title}</h2>
+              <input
+                type="text"
+                placeholder="entry giriniz..."
+                name="content"
+                ref={ref}
+                value={entryValues.content}
+                onChange={handleEntryValues}
+                className="captionEnter"
+                required
+              />
+
+              <div className="buttons">
+                <button
+                  className="closeModal"
+                  onClick={() => setOpenPopup(false)}
+                >
+                  Vazgeçtim
+                </button>
+                <button className="enterYourEntry" onClick={handleEntryPost}>
+                  Entry gir
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </Popup>
-
-
     </div>
-  )
-}
+  );
+};
 
-export default TitlePageTemplate
+export default TitlePageTemplate;

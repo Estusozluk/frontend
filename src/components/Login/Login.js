@@ -2,6 +2,7 @@ import React from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import useForm from "../FormValidation/useForm";
+import ErrorModal from "../UI/ErrorModal/ErrorModal";
 
 const Login = (props) => {
   const {
@@ -10,10 +11,24 @@ const Login = (props) => {
     validateInfo,
     handleLoginChange,
     loginValues,
+    error,
+    setError,
   } = useForm();
+
+  const confirm = () => {
+    setError(null);
+  };
 
   return (
     <div className="registerLogin">
+      {console.log(error)}
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          confirm={confirm}
+        />
+      )}
       <form className="registerLoginForm" onSubmit={handleLoginChange}>
         <h2 className="registrationLoginTitle">
           oo kimler gelmiş, tekrardan hoş geldin
