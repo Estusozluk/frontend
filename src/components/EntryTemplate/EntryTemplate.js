@@ -6,10 +6,13 @@ import { IoMdAddCircle } from "react-icons/io";
 import Popup from "../Popup/Popup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ErrorModal from "../Modals/Error/ErrorModal";
 const EntryTemplate = (props) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   const [openProfile, setOpenProfile] = useState(false);
+
+  const [error, setError] = useState();
 
   const ref = useRef();
 
@@ -23,6 +26,9 @@ const EntryTemplate = (props) => {
 
   const [booleanCheck, setBooleanCheck] = useState(false)
   
+  const confirm = () => {
+    setError(null);
+  };
 
   const getUserInfo = async (e) => {
     e.preventDefault();
@@ -79,10 +85,7 @@ const EntryTemplate = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        if(err.response.status === 401){
-
-          alert("giriş yapmadınız galiba?!")
-        }
+       
       });
   };
 
@@ -103,7 +106,10 @@ const EntryTemplate = (props) => {
     e.preventDefault();
 
     if (ref.current.value.trim().length <= 0) {
-      alert("Entry boş olamaz, lütfen entry giriniz!");
+         setError({
+        title: "Geçersiz değer",
+        message: "Entry boş olamaz, lütfen entry giriniz !",
+      });
     }
 
     axios
@@ -120,17 +126,26 @@ const EntryTemplate = (props) => {
         console.log(res);
 
         if (res.status === 200) {
-          alert("Entry'niz başarıyla iletildi!");
+          setError({
+            title: "İşlem başarılı",
+            message: "Entry'ni girdin :)",
+          });
           setOpenPopup(false);
         } else {
-          alert("Entry girilemedi, lutfen tekrar deneyiniz!");
+          setError({
+            title: "İşlem başarısız",
+            message: "Entry girilemedi be kanks :(",
+          });
           setOpenPopup(false);
         }
       })
       .catch((err) => {
         console.log(err);
         if(err.response.status === 401){
-          alert("giriş yapmadınız galiba")
+          setError({
+            title: "İşlem başarısız",
+            message: "giriş yapılmadı galiba :(",
+          });
         }
       });
   };
@@ -154,9 +169,10 @@ const EntryTemplate = (props) => {
       res => {
         console.log(res)
         if(res.status === 200){
-          if(res.status === 200){
-            alert("beğenmene sevindik :))")
-          }
+          setError({
+            title: "İşlem başarılı",
+            message: "Beğenmenize sevindik :(",
+          });
         }
       
       }
@@ -164,7 +180,10 @@ const EntryTemplate = (props) => {
       err => {
         console.log(err)
         if(err.response.status === 401){
-          alert("giriş yapmadınız galiba")
+          setError({
+            title: "İşlem başarısız",
+            message: "giriş yapılmadı galiba :(",
+          });
         }
       }
     )
@@ -231,6 +250,14 @@ const EntryTemplate = (props) => {
             {props.dislikes}
           </p>
         </div>
+
+        {error && (
+        <ErrorModal
+          confirm={confirm}
+          title={error.title}
+          message={error.message}
+        />
+      )}
 
         <div className="entryUserInfo">
           <span className="entryUserName" onClick={getUserInfo}>

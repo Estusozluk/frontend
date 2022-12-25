@@ -10,6 +10,7 @@ import axios from 'axios';
 import { Navigate, useLocation } from 'react-router-dom';
 import EntryTemplate from '../components/EntryTemplate/EntryTemplate';
 import Popup from '../components/Popup/Popup';
+import RequestService from '../services/RequestService';
 
 const TitlePageTemplate = (props) => {
 
@@ -48,7 +49,7 @@ const TitlePageTemplate = (props) => {
     const getUserInfo =  async (e, user) => {
       setUserToBeFollowed(user)
       e.preventDefault();
-       await axios.get("https://localhost:5001/api/User/" + user)
+       await RequestService.get("api/User/" + user)
         .then((res) => {
          
   
@@ -76,60 +77,43 @@ const TitlePageTemplate = (props) => {
       setOpenProfile(!openProfile);
     };
 
-    const Follow = (e) => {
-      e.preventDefault();
-      axios
-        .post("https://localhost:5001/api/User/follow", {
-          follower: userid,
-          followed: userid2
-        }, {
-  
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-            "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-            'Authorization': 'Bearer '+ token
-          }
-          
-        } )
-        .then((res) => {
-          console.log(res);
-          if(res.status === 200){
-            alert("bu kişiyi artık takip ediyorsunuz")
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if(err.response.status === 401){
-  
-            alert("giriş yapmadınız galiba?!")
-          }
-        });
-    };
+     const Follow = (e) => {
+    e.preventDefault();
+    RequestService
+      .post("api/User/follow", {
+        follower: userid,
+        followed: userid2
+      }, {
+
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin' : 'http://localhost:3000/',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+          "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+          'Authorization': 'Bearer '+ token
+        }
+        
+      } )
+      .then((res) => {
+        console.log(res);
+        if(res.status === 200){
+          alert("bu kişiyi artık takip ediyorsunuz")
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+       
+      });
+  };
 
 
-    useEffect(() => {
-
-      axios.get("https://localhost:5001/api/entry/" + title).then(
-          res => {
-              console.log(res)
-              setEntryArray(res.data)
-             
-             
-          }
-      ).catch(
-          err => {
-              console.log(err)
-          }
-      )
-  }, [title, openPopup, entryIsLiked, entryIsDisliked])
+ 
 
    const postLikeEntry = (e, entryid) => {
     console.log(e)
     console.log(entryid)
     e.preventDefault();
-    axios.post("https://localhost:5001/api/entry/like", {
+    RequestService.post("api/entry/like", {
       likedentryid: entryid,
       userid: userid
     }, {
@@ -146,6 +130,7 @@ const TitlePageTemplate = (props) => {
 
         if(res.status === 200){
           setEntryIsLiked(!entryIsLiked)
+          alert("beğenmene sevindik :))")
         }
       }
     ).catch(
@@ -163,7 +148,7 @@ const TitlePageTemplate = (props) => {
 
    const postDislikeEntry = (e, entryid) => {
     e.preventDefault();
-    axios.post("https://localhost:5001/api/entry/dislike", {
+    RequestService.post("api/entry/dislike", {
       dislikedentryid: entryid,
       userid: userid
     }, {
@@ -178,6 +163,7 @@ const TitlePageTemplate = (props) => {
       res => {
         console.log(res)
         if(res.status === 200){
+          alert("Entry beğenilmedi !!")
           setEntryIsDisliked(!entryIsDisliked)
         }
       }
@@ -234,7 +220,7 @@ const TitlePageTemplate = (props) => {
       alert("Entry boş olamaz, lütfen entry giriniz!")
     }
 
-    axios.post('https://localhost:5001/api/entry/', entryValues, {
+    RequestService.post('api/entry/', entryValues, {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin' : 'http://localhost:3000/',
@@ -266,64 +252,38 @@ const TitlePageTemplate = (props) => {
     
     <div className='titlePage'>
 
-<div className='titlePageTitle'>
-        <div className='titlePageTitleContainer'>
-        <h2>{title}</h2>
-        <p className='enterEntry' onClick={() => setOpenPopup(!openPopup)}><IoMdAddCircle /></p>
-        </div>
-        
 
-      </div>
 
         
-             {entryArray.map((entry, index) => {
+             
 
                
               
             
-                return (
+                
 
                     <div className='entry'>
                     <div className='entryCaption'>
-                    <p>{entry.e.content}</p>
+                    <p>{props.content}</p>
                   </div>
             
                   <div className='entryFooter'>
                     <div className='entryLikeDislike'>
-                        <p className='entryLike' onClick={(e) => postLikeEntry(e, entry.e.entryid)}><FaArrowUp /> {entry.likeCount}</p>
-                        <p className='entryDislike' onClick={(e) => postDislikeEntry(e, entry.e.entryid) }><FaArrowDown />{entry.dislikeCount}</p>
+                        <p className='entryLike' onClick={(e) => postLikeEntry(e, props.entryid)}><FaArrowUp /> {props.likeCount}</p>
+                        <p className='entryDislike' onClick={(e) => postDislikeEntry(e, props.entryid) }><FaArrowDown />{props.dislikeCount}</p>
                    
                     </div>
             
                     <div className='entryUserInfo'>
-                        <span className='entryUserName' onClick={(e) => getUserInfo(e, entry.user)}>{entry.user}</span>
-                        <span className='entryEditDate'>{entry.e.writedate}</span>
+                        <span className='entryUserName' onClick={(e) => getUserInfo(e, props.user)}>{props.user}</span>
+                        <span className='entryEditDate'>{props.writedate}</span>
                     </div>
                   </div>
                     </div>
 
 
-                )
-            })}
-        
-        <Popup trigger={openPopup} title={title}>
-
-<div className='modal'>
-
-<div className='overlay'>
-<div className='modalContent'>
-  <h2>{title}</h2>
-  <input type="text" placeholder='entry giriniz...' name='content' ref={ref} value={entryValues.content} onChange={handleEntryValues} className='captionEnter' required />
-  <button className='closeModal'  onClick={() => setOpenPopup(false)}>Close</button>
-  <button className='enterYourEntry' onClick={handleEntryPost}>entry gir</button>
-  
-</div>
-
-</div>
-
-</div>
-
-</Popup>
+                
+    
 
 <Popup trigger={openProfile}>
         <div className="modal">

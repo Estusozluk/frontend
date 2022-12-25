@@ -17,15 +17,21 @@
 }
 
 .enterEntry {
-  width: 300px;
+  width: 200px;
   height: 2em;
   display: flex;
   text-align: center;
   justify-items: center;
   justify-content: center;
+  align-items: center;
   font-size: 1.25em;
   background-color: rgb(240, 225, 205);
-  box-shadow: 0 1px 1px 1px;
+  box-shadow: 0px 0.2px 0.2px 0.2px;
+  font-size: 1rem;
+  border: 0;
+  border-radius: 20px;
+  
+  
 }
 
 .enterEntry:hover {
