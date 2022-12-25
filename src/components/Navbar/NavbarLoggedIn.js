@@ -4,38 +4,60 @@ import "./Navbar.css";
 import { BsFillPersonFill } from "react-icons/bs";
 import { BiPowerOff } from "react-icons/bi";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
+import SearchBar from "../SearchBar/SearchBar";
+import ChoiceModal from "../Modals/Choice/ChoiceModal";
 
 const NavbarLoggedIn = () => {
   const [userName, setUserName] = useState(localStorage.getItem("username"));
+  const [error, setError] = useState();
+  const [choice, setChoice] = useState();
+
+  const navigate = useNavigate();
 
   const logoutHandler = () => {
-    let logoutConfirmed = window.confirm("Gerçekten terk mi edeceksin beni ?");
-    console.log(logoutConfirmed);
-    if (logoutConfirmed === false) {
-      alert("Canımsın <333");
-      return;
-    }
-    localStorage.clear();
+    setChoice({
+      title: "Nereye gidiyorsun :(",
+      message: "Beni cidden terk mi edeceksin ?",
+    });
+  };
+
+  const userNotLeft = () => {
+    setChoice(null);
+  };
+
+  const userLeft = () => {
+    navigate("/login");
+    localStorage.removeItem("token");
     window.location.reload();
+    setChoice(null);
+
+    return;
   };
 
   return (
+    <div>
+      {choice && (
+        <ChoiceModal
+          title={choice.title}
+          message={choice.message}
+          yes={userLeft}
+          no={userNotLeft}
+        />
+      )}
     <header>
+      
       <div className="navigationBar">
         <div className="navLogo">
           <Link to="/">
             <p>estüsözlük</p>
           </Link>
         </div>
-        <div className="searchBar">
-          <input
-            type="text"
-            className="searchInput"
-            placeholder="Search for entry titles"
-          />
-        </div>
+
+        <SearchBar />
+
+        
 
         <div className="bottomBar">
           <Link to="/profile">
@@ -50,7 +72,10 @@ const NavbarLoggedIn = () => {
           </i>
         </div>
       </div>
+      
     </header>
+    </div>
+    
   );
 };
 

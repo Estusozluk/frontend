@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import RequestService from "../../services/RequestService";
 import EntryTemplate from "../EntryTemplate/EntryTemplate";
 import "./LandingPage.css";
 
@@ -9,10 +10,16 @@ const LandingPage = () => {
   const [likedDisliked, setLikedDisliked] = useState(false);
 
   useEffect(() => {
-    axios.get("https://localhost:5001/api/entry/landing").then((res) => {
-      console.log(res.data);
-      setData(res.data);
-    });
+   RequestService.get("api/title/landing").then(
+    res => {
+      console.log(res.data)
+      setData(res.data)
+    }
+   ).catch(
+    err => {
+      console.log(err)
+    }
+   )
   }, [likedDisliked]);
 
   return (
@@ -20,11 +27,11 @@ const LandingPage = () => {
       {data.map((entry) => {
         return (
           <EntryTemplate
-          entryid ={entry.value.titleData.entryid}
-            title={entry.value.titleData.titlename}
-            caption={entry.value.titleData.content}
-            user={entry.value.titleData.username}
-            date={entry.value.titleData.writedate}
+          entryid ={entry.value.entryid}
+            title={entry.value.titlename}
+            caption={entry.value.content}
+            user={entry.value.username}
+            date={entry.value.writedate}
             likes = {entry.value.likeCount}
             dislikes= {entry.value.dislikeCount}
             

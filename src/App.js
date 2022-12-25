@@ -18,7 +18,7 @@ import Popup from "./components/Popup/Popup";
 import NavbarLoggedIn from "./components/Navbar/NavbarLoggedIn";
 import { useSelector } from "react-redux";
 import { selectUser } from "./components/features/userSlice";
-import TitlePageTemplate from "./TitlePageTemplate/TitlePageTemplate";
+import TitlePage from "./components/TitlePage/TitlePage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -49,7 +49,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/titlePage" element={<TitlePageTemplate />} />
+            <Route path="/titlePage" element={<TitlePage />} />
           </Routes>
         </div>
       </BrowserRouter>

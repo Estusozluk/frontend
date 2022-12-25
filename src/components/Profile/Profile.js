@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
+import RequestService from "../../services/RequestService";
 import EntryTemplate from "../EntryTemplate/EntryTemplate";
 import "./Profile.css";
+import { IoMdSettings } from "react-icons/io";
 
 const Profile = () => {
   const [data, setData] = useState([]);
@@ -20,7 +22,7 @@ const Profile = () => {
   const [contentTobeDisplayed, setContentTobeDisplayed] = useState();
 
   useEffect(() => {
-    axios.get("https://localhost:5001/api/entry/user/" + userid).then((res) => {
+    RequestService.get("api/entry/user/" + userid).then((res) => {
       
       setData(res.data);
       
@@ -28,7 +30,7 @@ const Profile = () => {
       
     });
 
-    axios.get("https://localhost:5001/api/entry/user/liked/" + userid)
+    RequestService.get("api/entry/user/liked/" + userid)
     .then(
       res => {
         console.log(res);
@@ -41,7 +43,7 @@ const Profile = () => {
       }
     )
 
-    axios.get("https://localhost:5001/api/entry/user/disliked/" + userid)
+    RequestService.get("api/entry/user/disliked/" + userid)
     .then(
       res => {
         console.log(res);
@@ -59,7 +61,7 @@ const Profile = () => {
       <div>
         {data.map((entry) => {
           return (
-            <EntryTemplate title={entry.titlename} caption={entry.content} />
+            <EntryTemplate title={entry.titlename} caption={entry.content} date={entry.writedate} />
           );
         })}
       </div>
@@ -70,7 +72,7 @@ const Profile = () => {
       <div>
         {likedArray.map((entry) => {
           return (
-            <EntryTemplate title={entry.titlename} caption={entry.content} />
+            <EntryTemplate title={entry.titlename} caption={entry.content} date={entry.writedate} />
           );
         })}
       </div>
@@ -81,7 +83,7 @@ const Profile = () => {
       <div>
         {dislikedArray.map((entry) => {
           return (
-            <EntryTemplate title={entry.titlename} caption={entry.content} />
+            <EntryTemplate title={entry.titlename} caption={entry.content} date={entry.writedate} />
           );
         })}
       </div>
@@ -92,7 +94,8 @@ const Profile = () => {
     <div className="userInformations">
       <div className="headerInformations">
         <div className="username">
-          <h1 className="userName">{username}</h1>
+          <h1 className="userName">{username}    <IoMdSettings /></h1>
+       
           <div className="otherInformations">
             <p>takipçi: {follower}</p>
             <p>takip edilen: {following}</p>
