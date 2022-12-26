@@ -80,7 +80,10 @@ const EntryTemplate = (props) => {
       .then((res) => {
         console.log(res);
         if(res.status === 200){
-          alert("bu kişiyi artık takip ediyorsunuz")
+          setError({
+            title: "Işlem başarılı",
+            message: "Bu kişiyi takip ettiniz!"
+          })
         }
       })
       .catch((err) => {
@@ -297,15 +300,17 @@ const EntryTemplate = (props) => {
                 className="captionEnter"
                 required
               />
-              <button
-                className="closeModal"
-                onClick={() => setOpenPopup(false)}
-              >
-                Close
-              </button>
-              <button className="enterYourEntry" onClick={handleEntryPost}>
-                entry gir
-              </button>
+    <div className="buttons">
+                <button
+                  className="closeModal"
+                  onClick={() => setOpenPopup(false)}
+                >
+                  Vazgeçtim
+                </button>
+                <button className="enterYourEntry" onClick={handleEntryPost}>
+                  Entry gir
+                </button>
+              </div>
             </div>
           </div>
         </div>

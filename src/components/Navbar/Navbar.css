@@ -12,6 +12,9 @@
   font-style: normal;
 }
 
+
+
+
 .topics {
   display: flex;
   flex-direction: row;
@@ -30,9 +33,7 @@
   padding-left: 1em;
 }
 
-.navLogo:hover {
-  color: rgb(147, 145, 145);
-}
+
 
 .topBar {
   display: flex;
@@ -52,6 +53,7 @@
 }
 
 .topBar div:hover {
+  background-color: rgb(9, 57, 9);
   color: rgb(147, 145, 145);
 }
 
