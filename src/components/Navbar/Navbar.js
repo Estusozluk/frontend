@@ -4,6 +4,7 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import useForm from "../FormValidation/useForm";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Navbar = () => {
   function UserLoggedIn(props) {
@@ -29,13 +30,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <div className="topics">
-          <div>#gündem</div>
-          <div>#spor</div>
-          <div>#siyaset</div>
-          <div>#teknoloji</div>
-          <div>#estü</div>
-        </div>
+        <SearchBar />
 
         <nav className="topBar">
           <React.Fragment>

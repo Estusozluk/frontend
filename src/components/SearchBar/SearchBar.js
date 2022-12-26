@@ -14,7 +14,7 @@ const SearchBar = () => {
 
   const [openPopup, setOpenPopup] = useState(false)
 
-  const userid = localStorage.getItem('userid')
+  const userid = localStorage.getItem('userId')
   const token = localStorage.getItem('token')
 
   let [searchTitle, setSearchTitle] = useState("")
@@ -42,6 +42,8 @@ const SearchBar = () => {
 
   const handleSearchValue = (e) => {
     setSearchValue(e.target.value);
+
+    
   };
 
   const handleEntryValues = e => {
@@ -62,14 +64,18 @@ const SearchBar = () => {
     setSearchTitle(entry);
   }
 
-  const handleEntryPost = (e, entry) => {
+  const handleEntryPost = async (e) => {
     e.preventDefault();
 
     if(ref.current.value.trim().length <= 0){
       alert("Entry boş olamaz, lütfen entry giriniz!")
     }
 
-    RequestService.post('api/entry/', entryValues, {
+    await RequestService.post('api/entry/', {
+        userid: userid,
+        titlename: searchTitle,
+        content: entryValues.content
+    }, {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin' : 'http://localhost:3000/',
@@ -82,7 +88,7 @@ const SearchBar = () => {
         console.log(res)
 
         if(res.status === 200){
-
+          console.log(entryValues)
           alert("Entry'niz başarıyla iletildi!")
           setOpenPopup(false)
         }

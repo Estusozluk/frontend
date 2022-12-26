@@ -4,6 +4,7 @@ import RequestService from "../../services/RequestService";
 import TitlePageTemplate from "../../TitlePageTemplate/TitlePageTemplate";
 import { IoMdAddCircle } from "react-icons/io";
 import Popup from "../Popup/Popup";
+import ErrorModal from "../Modals/Error/ErrorModal";
 
 const TitlePage = () => {
 
@@ -16,9 +17,15 @@ const TitlePage = () => {
   const {title} = location.state;
 
   const [openPopup, setOpenPopup] = useState(false)
+
+
+  const [error, setError] = useState();
  
 
+  const confirm = e => {
 
+    setError(null)
+  }
   
 
   const ref = useRef()
@@ -48,11 +55,20 @@ const TitlePage = () => {
     
   })
 
+  
+  
+
   const handleEntryPost = (e, entry) => {
     e.preventDefault();
 
     if(ref.current.value.trim().length <= 0){
-      alert("Entry boş olamaz, lütfen entry giriniz!")
+      setError({
+        title: "Işlem başarısız",
+        message: "Entry boş olamaz",
+       
+        
+      })
+      setOpenPopup(!openPopup)
     }
 
     RequestService.post('api/entry/', entryValues, {
@@ -79,7 +95,9 @@ const TitlePage = () => {
       }
     ).err(
       err => {
-        console.log(err)
+        if(err.response.status === 401){
+
+        }
       }
     )
   }
@@ -110,6 +128,15 @@ return (
   <div className='titlePage'>
 
   <div className='titlePageTitle'>
+  {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          confirm={confirm}
+         
+        />
+      )}
+
           <div className='titlePageTitleContainer'>
           <h2>{title}</h2>
           <p className='enterEntry' onClick={() => setOpenPopup(!openPopup)}><IoMdAddCircle /> Entry Giriniz</p>
@@ -141,8 +168,17 @@ return (
 <div className='modalContent'>
   <h2>{title}</h2>
   <input type="text" placeholder='entry giriniz...' name='content' ref={ref} value={entryValues.content} onChange={handleEntryValues} className='captionEnter' required />
-  <button className='closeModal'  onClick={() => setOpenPopup(false)}>Close</button>
-  <button className='enterYourEntry' onClick={handleEntryPost}>entry gir</button>
+  <div className="buttons">
+                <button
+                  className="closeModal"
+                  onClick={() => setOpenPopup(false)}
+                >
+                  Vazgeçtim
+                </button>
+                <button className="enterYourEntry" onClick={handleEntryPost}>
+                  Entry gir
+                </button>
+              </div>
   
 </div>
 

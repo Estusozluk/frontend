@@ -1,10 +1,8 @@
-*{
-
+* {
     box-sizing: border-box;
-}
-
-.modal .overlay{
-
+  }
+  
+  .modal .overlay {
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -12,46 +10,79 @@
     right: 0;
     bottom: 0;
     position: fixed;
-}
-
-.overlay{
-
-    background: rgba(49,49,49,0.8);
-}
-
-
-.modalContent{
-
+  }
+  
+  .overlay {
+    background: rgba(49, 49, 49, 0.8);
+  }
+  
+  .modalContent {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.4;
     background: #f1f1f1;
-    padding: 14px 28px;
+    padding-left: 15px;
+    padding-right: 15px;
     border-radius: 3px;
     max-width: 600px;
     min-width: 300px;
-}
-
-.closeModal{
-
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px 7px;
-}
-
-.captionEnter{
-
+  }
+  
+  .captionEnter {
     border: none;
-    width: 300px;
     height: 150px;
-}
-
-
-.captionEnter::placeholder{
-
+    margin: 12px;
+  }
+  
+  .captionEnter::placeholder {
     justify-content: flex-start;
     text-align: start;
-}
+  }
+  
+  .buttons {
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  button {
+    display: inline-block;
+    width: 45%;
+    padding: 10px;
+    margin: 5px;
+    color: white;
+    font-size: 0.9em;
+  }
+  .closeModal {
+    background-color: rgba(255, 0, 0, 0.7);
+    border: 3px solid transparent;
+    cursor: pointer;
+  }
+  
+  .closeModal:hover {
+    background-color: rgba(255, 0, 0, 1);
+  }
+  
+  .closeModal:active {
+    background-color: rgba(255, 0, 0, 0.3);
+    border: 3px solid rgba(255, 0, 0, 1);
+  }
+  
+  .enterYourEntry {
+    cursor: pointer;
+    background-color: rgba(0, 128, 0, 0.8);
+    border: 3px solid transparent;
+  }
+  
+  .enterYourEntry:hover {
+    background-color: rgba(0, 128, 0, 1);
+  }
+  
+  .enterYourEntry:active {
+    background-color: rgba(0, 128, 0, 0.3);
+    border: 3px solid rgba(0, 128, 0, 1);
+  }
