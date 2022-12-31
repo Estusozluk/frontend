@@ -7,6 +7,7 @@ import Popup from "../Popup/Popup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ErrorModal from "../Modals/Error/ErrorModal";
+import RequestService from "../../services/RequestService";
 const EntryTemplate = (props) => {
   const [openPopup, setOpenPopup] = useState(false);
 
@@ -17,7 +18,7 @@ const EntryTemplate = (props) => {
   const ref = useRef();
 
   let userid = localStorage.getItem("userId");
-  let userid2 = 1;
+  const [userid2, setUserId2] = useState(0);
   const [entryValues, setEntryValues] = useState({
     userid: userid,
     titlename: props.title,
@@ -32,11 +33,11 @@ const EntryTemplate = (props) => {
 
   const getUserInfo = async (e) => {
     e.preventDefault();
-     await axios.get("https://localhost:5001/api/User/" + props.user)
+     await RequestService.get("api/User/" + props.user)
       .then((res) => {
        
 
-        userid2 = res.data.userid
+        setUserId2(res.data.userid)
 
         
 
@@ -62,8 +63,8 @@ const EntryTemplate = (props) => {
 
   const Follow = (e) => {
     e.preventDefault();
-    axios
-      .post("https://localhost:5001/api/User/follow", {
+    RequestService
+      .post("api/User/follow", {
         follower: userid,
         followed: userid2
       }, {
@@ -115,8 +116,8 @@ const EntryTemplate = (props) => {
       });
     }
 
-    axios
-      .post("https://localhost:5001/api/entry/", entryValues, {
+    RequestService
+      .post("api/entry/", entryValues, {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin' : 'http://localhost:3000/',
@@ -157,7 +158,7 @@ const EntryTemplate = (props) => {
     console.log(e)
     console.log(entryid)
     e.preventDefault();
-    axios.post("https://localhost:5001/api/entry/like", {
+    RequestService.post("api/entry/like", {
       likedentryid: entryid,
       userid: userid
     }, {
@@ -196,7 +197,7 @@ const EntryTemplate = (props) => {
 
    const postDislikeEntry = (e, entryid) => {
     e.preventDefault();
-    axios.post("https://localhost:5001/api/entry/dislike", {
+    RequestService.post("api/entry/dislike", {
       dislikedentryid: entryid,
       userid: userid
     }, {

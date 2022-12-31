@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import RequestService from "../../services/RequestService";
-import TitlePageTemplate from "../../TitlePageTemplate/TitlePageTemplate";
+import TitlePageTemplate from "../TitlePageTemplate/TitlePageTemplate";
 import { IoMdAddCircle } from "react-icons/io";
 import Popup from "../Popup/Popup";
 import ErrorModal from "../Modals/Error/ErrorModal";
@@ -15,6 +15,8 @@ const TitlePage = () => {
 
   const location = useLocation();
   const {title} = location.state;
+  console.log(title)
+ 
 
   const [openPopup, setOpenPopup] = useState(false)
 
@@ -58,8 +60,9 @@ const TitlePage = () => {
   
   
 
-  const handleEntryPost = (e, entry) => {
+  const handleEntryPost = (e) => {
     e.preventDefault();
+    console.log(title)
 
     if(ref.current.value.trim().length <= 0){
       setError({
@@ -71,7 +74,11 @@ const TitlePage = () => {
       setOpenPopup(!openPopup)
     }
 
-    RequestService.post('api/entry/', entryValues, {
+    RequestService.post('api/entry/', {
+      userid: userid,
+      titlename: title,
+      content: entryValues.content
+    }, {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin' : 'http://localhost:3000/',
@@ -110,7 +117,7 @@ const TitlePage = () => {
 
     RequestService.get("api/title/" + title).then(
         res => {
-            console.log(res)
+            console.log(res.data)
             setEntryArray(res.data)
            
            
@@ -148,6 +155,7 @@ return (
           {entryArray.map((entry) => {
         return (
           <TitlePageTemplate
+            entryid={entry.entry.entryid}
             content={entry.entry.content}
             user={entry.user}
             writedate={entry.entry.writedate}

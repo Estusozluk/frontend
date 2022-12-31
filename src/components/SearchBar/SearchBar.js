@@ -12,19 +12,19 @@ const SearchBar = () => {
 
   const [searchArray, setSearchArray] = useState([]);
 
-  const [openPopup, setOpenPopup] = useState(false)
+  const [openPopup, setOpenPopup] = useState(false);
 
-  const userid = localStorage.getItem('userId')
-  const token = localStorage.getItem('token')
+  const userid = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
 
-  let [searchTitle, setSearchTitle] = useState("")
+ 
 
-  let title = ""
+
 
   const [entryValues, setEntryValues] = useState({
   
     userid: userid,
-    titlename: searchTitle,
+    titlename: searchValue,
     content: ''
 
     
@@ -61,7 +61,7 @@ const SearchBar = () => {
   function createNewTitle(entry){
 
     setOpenPopup(!openPopup);
-    setSearchTitle(entry);
+    setSearchValue(entry);
   }
 
   const handleEntryPost = async (e) => {
@@ -73,7 +73,7 @@ const SearchBar = () => {
 
     await RequestService.post('api/entry/', {
         userid: userid,
-        titlename: searchTitle,
+        titlename: searchValue,
         content: entryValues.content
     }, {
       headers: {
@@ -148,11 +148,11 @@ const SearchBar = () => {
       ) : null}
 
 
-       <Popup trigger={openPopup} title={searchTitle}>
+       <Popup trigger={openPopup} title={searchValue}>
         <div className="modal">
           <div className="overlay">
             <div className="modalContent">
-              <h2>{searchTitle}</h2>
+              <h2>{searchValue}</h2>
               <input
                 type="text"
                 placeholder="entry giriniz..."
