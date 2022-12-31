@@ -1,6 +1,6 @@
 
 import React, {useEffect, useState, useRef} from 'react'
-import '../components/EntryTemplate/EntryTemplate.css'
+
 import './TitlePageTemplate.css'
 import { FaArrowUp } from 'react-icons/fa';
 import { FaArrowDown } from 'react-icons/fa'
@@ -8,32 +8,29 @@ import {IoMdAddCircle} from 'react-icons/io'
 
 import axios from 'axios';
 import { Navigate, useLocation } from 'react-router-dom';
-import EntryTemplate from '../components/EntryTemplate/EntryTemplate';
-import Popup from '../components/Popup/Popup';
-import RequestService from '../services/RequestService';
+import EntryTemplate from '../EntryTemplate/EntryTemplate';
+import Popup from '../Popup/Popup';
+import RequestService from '../../services/RequestService';
 
 const TitlePageTemplate = (props) => {
 
-    const location = useLocation();
-    const {title} = location.state;
+    
+    
+
+    
 
     const [entryArray, setEntryArray] = useState([]);
     const [openPopup, setOpenPopup] = useState(false);
 
     const [openProfile, setOpenProfile] = useState(false);
 
-    let userid = localStorage.getItem('userId')
-    let token = localStorage.getItem('token')
-    let userid2 = 0;
+    let userid = localStorage.getItem('userId');
+    let token = localStorage.getItem('token');
+    const [userid2, setUserId2] = useState(0);
 
     const [booleanCheck, setBooleanCheck] = useState(false)
     
 
-    const [likedEntryValues, setLikedEntryValues] = useState({
-
-      likedentryid: localStorage.getItem("entryid"),
-      userid: userid
-    })
 
     const [entryIsLiked, setEntryIsLiked] = useState(false);
 
@@ -41,11 +38,7 @@ const TitlePageTemplate = (props) => {
 
     const [userToBeFollowed, setUserToBeFollowed] = useState("");
 
-    const [dislikedEntryValues, setDislikedEntryValues] = useState({
-      dislikedentryid: localStorage.getItem("entryid"),
-      userid: userid
-    })
-
+ 
     const getUserInfo =  async (e, user) => {
       setUserToBeFollowed(user)
       e.preventDefault();
@@ -53,7 +46,7 @@ const TitlePageTemplate = (props) => {
         .then((res) => {
          
   
-          userid2 = res.data.userid
+          setUserId2(res.data.userid) 
   
           
   
@@ -179,19 +172,7 @@ const TitlePageTemplate = (props) => {
     
    }
     const ref = useRef()
-    const [entryValues, setEntryValues] = useState({
-  
-      userid: userid,
-      titlename: title,
-      content: ''
-  
-      
-  
-  
-  
-      
-    })
-
+    
  
 
 
@@ -199,55 +180,9 @@ const TitlePageTemplate = (props) => {
 
 
 
-  const handleEntryValues = e => {
 
 
-    const {name, value} = e.target;
-
-    setEntryValues({
-      ...entryValues,
-      [name]: value
-    })
-
-  }
-
-
-
-  const handleEntryPost = (e, entry) => {
-    e.preventDefault();
-
-    if(ref.current.value.trim().length <= 0){
-      alert("Entry boş olamaz, lütfen entry giriniz!")
-    }
-
-    RequestService.post('api/entry/', entryValues, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-        'Authorization': 'Bearer '+ token
-      }
-    }).then(
-      res => {
-        console.log(res)
-
-        if(res.status === 200){
-
-          alert("Entry'niz başarıyla iletildi!")
-          setOpenPopup(false)
-        }
-        else{
-          alert("Entry girilemedi, lutfen tekrar deneyiniz!")
-          setOpenPopup(false)
-        }
-      }
-    ).err(
-      err => {
-        console.log(err)
-      }
-    )
-  }
+  
   return (
     
     <div className='titlePage'>
