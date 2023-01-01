@@ -105,7 +105,7 @@ const useForm = () => {
 
     RequestService.post("api/User", registerValues, {
       headers: {
-        "Access-Control-Allow-Origin": "http://localhost:3000/",
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
         "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
       },
@@ -133,7 +133,7 @@ const useForm = () => {
 
     await RequestService.post("api/User/login", loginValues, {
       headers: {
-        "Access-Control-Allow-Origin": "http://localhost:3000/",
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
         "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
       },
