@@ -28,7 +28,7 @@ const AsideBar = () => {
 
 
 
-    }, [])
+    }, [titlesArray])
 
     const navigate = useNavigate();
    
