@@ -34,6 +34,20 @@ const TitlePage = () => {
     });
   };
 
+  function checkUserLoggedIn() {
+    console.log(token);
+    if (token === null) {
+      setError({
+        title: "Başarısız işlem",
+        message: "E hani giriş yapmamışsın ki",
+      });
+      //alert("Giriş yapar mısın canım :))");
+      return;
+    } else {
+      setOpenPopup(!openPopup);
+    }
+  }
+
   const [entryValues, setEntryValues] = useState({
     userid: userid,
     titlename: title,
@@ -50,6 +64,7 @@ const TitlePage = () => {
         message: "Entry boş olamaz",
       });
       setOpenPopup(!openPopup);
+      return;
     }
 
     RequestService.post(
@@ -73,11 +88,19 @@ const TitlePage = () => {
         console.log(res);
 
         if (res.status === 200) {
-          alert("Entry'niz başarıyla iletildi!");
+          setError({
+            title: "Başarılı işlem",
+            message: "Entry başarıyla iletildi!",
+          });
           setOpenPopup(false);
+          return;
         } else {
-          alert("Entry girilemedi, lutfen tekrar deneyiniz!");
+          setError({
+            title: "Başarısız işlem",
+            message: "Entry girilemedi, lütfen tekrar deneyiniz",
+          });
           setOpenPopup(false);
+          return;
         }
       })
       .err((err) => {
@@ -110,7 +133,7 @@ const TitlePage = () => {
 
         <div className="titlePageTitleContainer">
           <h2>{title}</h2>
-          <p className="enterEntry" onClick={() => setOpenPopup(!openPopup)}>
+          <p className="enterEntry" onClick={checkUserLoggedIn}>
             <IoMdAddCircle /> Entry Giriniz
           </p>
         </div>

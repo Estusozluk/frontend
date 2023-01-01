@@ -85,3 +85,8 @@
 
   right: 60px;
 }
+
+.entryUserName:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
