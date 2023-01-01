@@ -24,8 +24,25 @@ const Profile = () => {
 
   const [contentTobeDisplayed, setContentTobeDisplayed] = useState();
 
+  let f1 = localStorage.getItem("followerCount");
+  let f2 = localStorage.getItem("followedCount");
+  let b1 = localStorage.getItem("badieCount")
+
   useEffect(() => {
+
+    RequestService.get("api/User/" + username).then(
+      res => {
+        console.log(res.data)
+        localStorage.setItem("followerCount", res.data.followerCount);
+        localStorage.setItem("followedCount", res.data.followedCount);
+        localStorage.setItem("badieCount", res.data.badieCount);
+       
+      }
+    )
+
+
     RequestService.get("api/entry/user/" + userid).then((res) => {
+      console.log(res)
       setData(res.data);
     });
 
@@ -47,7 +64,7 @@ const Profile = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [data, likedArray, dislikedArray]);
 
   const showEnteredEntries = () => {
     setContentTobeDisplayed(
@@ -55,9 +72,11 @@ const Profile = () => {
         {data.map((entry) => {
           return (
             <EntryTemplate
+              entryid={entry.entryid}
               title={entry.titlename}
               caption={entry.content}
               date={entry.writedate}
+              delete={true}
             />
           );
         })}
@@ -70,9 +89,11 @@ const Profile = () => {
         {likedArray.map((entry) => {
           return (
             <EntryTemplate
+              entryid={entry.entryid}
               title={entry.titlename}
               caption={entry.content}
               date={entry.writedate}
+              delete={false}
             />
           );
         })}
@@ -85,9 +106,11 @@ const Profile = () => {
         {dislikedArray.map((entry) => {
           return (
             <EntryTemplate
+              entryid={entry.entryid}
               title={entry.titlename}
               caption={entry.content}
               date={entry.writedate}
+              delete={false}
             />
           );
         })}
@@ -131,16 +154,12 @@ const Profile = () => {
           </h1>
 
           <div className="otherInformations">
-            <p>takipçi: {follower}</p>
-            <p>takip edilen: {following}</p>
-            <p>badi sayisi: {badies}</p>
+            <p>takipçi: {f1}</p>
+            <p>takip edilen: {f2}</p>
+            <p>badi sayisi: {b1}</p>
           </div>
         </div>
-        <div className="userAvatar">
-          <p>
-            <CgProfile />
-          </p>
-        </div>
+        
       </div>
 
       <div className="footerInfo">

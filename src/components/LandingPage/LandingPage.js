@@ -20,7 +20,7 @@ const LandingPage = () => {
       console.log(err)
     }
    )
-  }, [likedDisliked]);
+  }, [data]);
 
   return (
     <div className="entries">
@@ -34,6 +34,8 @@ const LandingPage = () => {
             date={entry.value.writedate}
             likes = {entry.value.likeCount}
             dislikes= {entry.value.dislikeCount}
+            delete={false}
+            liked={likedDisliked}
             
           />
         );

@@ -28,6 +28,8 @@ const EntryTemplate = (props) => {
 
   const [booleanCheck, setBooleanCheck] = useState(false);
 
+  const [liked, setLiked] = useState(false);
+
   const confirm = () => {
     setError(null);
   };
@@ -74,6 +76,7 @@ const EntryTemplate = (props) => {
     )
       .then((res) => {
         console.log(res);
+       
 
         if (res.status === 200) {
           setTimeout(() => {});
@@ -177,8 +180,11 @@ const EntryTemplate = (props) => {
         if (res.status === 200) {
           setError({
             title: "İşlem başarılı",
-            message: "Beğenmenize sevindik :(",
+            message: "Beğenmenize sevindik :)",
           });
+
+          setLiked(props.liked)
+          
         }
       })
       .catch((err) => {
@@ -215,7 +221,7 @@ const EntryTemplate = (props) => {
         if (res.status === 200) {
           if (res.status === 200) {
             setError({
-              title: "Başarısız işlem",
+              title: "Başarılı işlem",
               message: "Entry Beğenilemedi",
             });
             return;
@@ -223,9 +229,50 @@ const EntryTemplate = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        setError({
+          title: "Başarısız işlem",
+          message: "giriş yapılmadı galiba :("
+        })
       });
   };
+
+  const deleteEntry = (e) => {
+    e.preventDefault();
+
+
+    RequestService.delete("/api/entry/delete/" + props.entryid,  {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:3000/",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+        Authorization: "Bearer " + token,
+      },
+    }).then(
+      res => {
+        console.log(res)
+
+        if(res.status === 200){
+          setError({
+            title: "Işlem başarılı",
+            message: "Entry silindi!"
+          });
+          setTimeout(() => {
+
+            window.location.reload();
+          }, 1000)
+         
+        }
+      }
+    ).catch(
+      err => {
+        setError({
+          title: "Başarısız İşlem",
+          message: "giriş yapılmadı galiba"
+        })
+      }
+    )
+  }
   return (
     <div className="entry">
       {error && (
@@ -245,10 +292,13 @@ const EntryTemplate = (props) => {
             {props.title}
           </h2>
         </div>
-        <i className="deleteButton">
-          {" "}
-          <BsTrashFill />
-        </i>
+        {props.delete ? 
+         <i className="deleteButton">
+         {" "}
+         <BsTrashFill onClick={deleteEntry} />
+       </i> : null
+        }
+       
       </div>
 
       <div className="entryCaption">

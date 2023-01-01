@@ -146,6 +146,7 @@ const useForm = () => {
         localStorage.setItem("follower", res.data.followerCount);
         localStorage.setItem("following", res.data.followedCount);
         localStorage.setItem("badies", res.data.badieCount);
+        localStorage.setItem("email", res.data.email);
 
         console.log(localStorage.getItem("follower"));
         let token = localStorage.getItem("token");

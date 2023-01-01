@@ -147,8 +147,8 @@ const TitlePage = () => {
               content={entry.entry.content}
               user={entry.user}
               writedate={entry.entry.writedate}
-              likeCount={entry.entry.likeCount}
-              dislikeCount={entry.entry.dislikeCount}
+              likeCount={entry.likeCount}
+              dislikeCount={entry.disLikeCount}
             />
           );
         })}

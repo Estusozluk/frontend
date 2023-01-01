@@ -61,15 +61,19 @@
   padding-right: 10px;
   border: 1px solid transparent;
 }
-.footerTitle:hover {
-  background-color: rgb(168, 146, 118);
-}
+
 .footerTitle:active {
   border: 1px solid rgb(168, 146, 118);
   background-color: antiquewhite;
 }
 
 .footerTitleHorizontal {
+  width: 91%;
+}
+
+.footerTitleHorizontal:hover{
+  background-color: green;
+  border-color: green;
   width: 91%;
 }
 
