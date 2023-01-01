@@ -13,7 +13,7 @@ const TitlePage = () => {
 
   const location = useLocation();
   const { title } = location.state;
-  console.log(title);
+ 
 
   const [openPopup, setOpenPopup] = useState(false);
 
@@ -118,7 +118,7 @@ const TitlePage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [title]);
 
   return (
     <div className="titlePage">
