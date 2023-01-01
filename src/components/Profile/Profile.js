@@ -49,8 +49,8 @@ const Profile = () => {
     RequestService.get("api/entry/user/liked/" + userid)
       .then((res) => {
         
-       
-        console.log(likedArray);
+        setLikedArray(res.data);
+        
       })
       .catch((err) => {
         console.log(err);
