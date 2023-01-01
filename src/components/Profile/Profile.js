@@ -64,7 +64,7 @@ const Profile = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [data, likedArray, dislikedArray]);
+  }, []);
 
   const showEnteredEntries = () => {
     setContentTobeDisplayed(

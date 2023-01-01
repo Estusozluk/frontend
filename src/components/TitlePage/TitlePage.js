@@ -118,7 +118,7 @@ const TitlePage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [title]);
+  }, []);
 
   return (
     <div className="titlePage">

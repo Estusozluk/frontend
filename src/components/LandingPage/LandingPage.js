@@ -20,7 +20,7 @@ const LandingPage = () => {
       console.log(err)
     }
    )
-  }, [data]);
+  }, []);
 
   return (
     <div className="entries">
