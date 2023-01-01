@@ -6,6 +6,7 @@ import RequestService from "../../services/RequestService";
 import { useNavigate } from "react-router-dom";
 import Popup from "../Popup/Popup";
 import { useReducer } from "react";
+import ErrorModal from "../Modals/Error/ErrorModal";
 
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -13,6 +14,8 @@ const SearchBar = () => {
   const [searchArray, setSearchArray] = useState([]);
 
   const [openPopup, setOpenPopup] = useState(false);
+
+  const [error, setError] = useState();
 
   const userid = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -29,6 +32,10 @@ const SearchBar = () => {
 
   const handleSearchValue = (e) => {
     setSearchValue(e.target.value);
+  };
+
+  const confirm = () => {
+    setError(null);
   };
 
   const handleEntryValues = (e) => {
@@ -49,7 +56,12 @@ const SearchBar = () => {
     e.preventDefault();
 
     if (ref.current.value.trim().length <= 0) {
-      alert("Entry boş olamaz, lütfen entry giriniz!");
+      setError({
+        title: "Başarısız işlem",
+        message: "Entry boş olamaz, lütfen entry giriniz",
+      });
+      setOpenPopup(!openPopup);
+      return;
     }
 
     await RequestService.post(
@@ -73,12 +85,20 @@ const SearchBar = () => {
         console.log(res);
 
         if (res.status === 200) {
-          console.log(entryValues);
-          alert("Entry'niz başarıyla iletildi!");
+          setError({
+            title: "Başarılı işlem",
+            message: "Entry'niz başarıyla iletildi",
+          });
+
           setOpenPopup(false);
+          return;
         } else {
-          alert("Entry girilemedi, lutfen tekrar deneyiniz!");
+          setError({
+            title: "Başarısız işlem",
+            message: "Entry girilemedi, lütfen tekrar deneyiniz!",
+          });
           setOpenPopup(false);
+          return;
         }
       })
       .err((err) => {
@@ -99,6 +119,13 @@ const SearchBar = () => {
   }, [searchValue]);
   return (
     <div className="searchBar">
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          confirm={confirm}
+        />
+      )}
       <div className="searchInputs">
         <input
           type="text"

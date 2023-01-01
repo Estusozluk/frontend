@@ -54,6 +54,7 @@ const EntryTemplate = (props) => {
   };
 
   const Follow = (e) => {
+    setOpenProfile(!openProfile);
     e.preventDefault();
     RequestService.post(
       "api/User/follow",
@@ -73,7 +74,9 @@ const EntryTemplate = (props) => {
     )
       .then((res) => {
         console.log(res);
+
         if (res.status === 200) {
+          setTimeout(() => {});
           setError({
             title: "Işlem başarılı",
             message: "Bu kişiyi takip ettiniz!",
@@ -81,7 +84,10 @@ const EntryTemplate = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        setError({
+          title: "Başarısız işlem",
+          message: "Zaten takip ediyorsun ",
+        });
       });
   };
 
@@ -106,6 +112,7 @@ const EntryTemplate = (props) => {
         title: "Geçersiz değer",
         message: "Entry boş olamaz, lütfen entry giriniz !",
       });
+      return;
     }
 
     RequestService.post("api/entry/", entryValues, {
@@ -207,7 +214,11 @@ const EntryTemplate = (props) => {
         console.log(res);
         if (res.status === 200) {
           if (res.status === 200) {
-            alert("bu entry beğenilmedi");
+            setError({
+              title: "Başarısız işlem",
+              message: "Entry Beğenilemedi",
+            });
+            return;
           }
         }
       })
@@ -217,6 +228,13 @@ const EntryTemplate = (props) => {
   };
   return (
     <div className="entry">
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          confirm={confirm}
+        />
+      )}
       <div className="entryTitle">
         <div className="entryTitleContainer">
           <h2

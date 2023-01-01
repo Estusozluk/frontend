@@ -10,6 +10,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import EntryTemplate from "../EntryTemplate/EntryTemplate";
 import Popup from "../Popup/Popup";
 import RequestService from "../../services/RequestService";
+import ErrorModal from "../Modals/Error/ErrorModal";
 
 const TitlePageTemplate = (props) => {
   const [entryArray, setEntryArray] = useState([]);
@@ -20,6 +21,8 @@ const TitlePageTemplate = (props) => {
   let userid = localStorage.getItem("userId");
   let token = localStorage.getItem("token");
   const [userid2, setUserId2] = useState(0);
+
+  const [error, setError] = useState();
 
   const [booleanCheck, setBooleanCheck] = useState(false);
 
@@ -51,7 +54,12 @@ const TitlePageTemplate = (props) => {
     setOpenProfile(!openProfile);
   };
 
+  const confirm = () => {
+    setError(null);
+  };
+
   const Follow = (e) => {
+    setOpenProfile(!openProfile);
     e.preventDefault();
     RequestService.post(
       "api/User/follow",
@@ -72,11 +80,18 @@ const TitlePageTemplate = (props) => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          alert("bu kişiyi artık takip ediyorsunuz");
+          setError({
+            title: "Başarılı işlem",
+            message: "Bu kişiyi artık takip ediyorsunuz",
+          });
+          return;
         }
       })
       .catch((err) => {
-        console.log(err);
+        setError({
+          title: "Başarısız işlem",
+          message: "Zaten takip ediyorsun",
+        });
       });
   };
 
@@ -105,13 +120,16 @@ const TitlePageTemplate = (props) => {
 
         if (res.status === 200) {
           setEntryIsLiked(!entryIsLiked);
-          alert("beğenmene sevindik :))");
+          setError({
+            title: "Başarılı işlem",
+            message: "Beğenmene sevindik :))",
+          });
         }
       })
       .catch((err) => {
         console.log(err);
         if (err.response.status === 401) {
-          alert("giriş yapmadınız galiba ?!");
+          return;
         }
       });
   };
@@ -137,14 +155,21 @@ const TitlePageTemplate = (props) => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          alert("Entry beğenilmedi !!");
-          setEntryIsDisliked(!entryIsDisliked);
+          setError({
+            title: "Başarısız işlem",
+            message: "Entry beğenilmedi",
+          });
+          return;
         }
       })
       .catch((err) => {
         console.log(err);
         if (err.response.status === 401) {
-          alert("giriş yapmadınız galiba ?!");
+          setError({
+            title: "Başarısız işlem",
+            message: "E hani giriş yapmamışsın ki",
+          });
+          return;
         }
       });
   };
@@ -154,6 +179,13 @@ const TitlePageTemplate = (props) => {
 
   return (
     <div>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          confirm={confirm}
+        />
+      )}
       <div className="entry">
         <div className="entryCaption">
           <p>{props.content}</p>
