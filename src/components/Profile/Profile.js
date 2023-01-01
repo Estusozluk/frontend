@@ -32,7 +32,7 @@ const Profile = () => {
 
     RequestService.get("api/User/" + username).then(
       res => {
-        console.log(res.data)
+       
         localStorage.setItem("followerCount", res.data.followerCount);
         localStorage.setItem("followedCount", res.data.followedCount);
         localStorage.setItem("badieCount", res.data.badieCount);
@@ -49,7 +49,7 @@ const Profile = () => {
     RequestService.get("api/entry/user/liked/" + userid)
       .then((res) => {
         
-        setLikedArray(res.data);
+       
         console.log(likedArray);
       })
       .catch((err) => {
@@ -64,7 +64,7 @@ const Profile = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [data, likedArray, dislikedArray]);
+  }, []);
 
   const showEnteredEntries = () => {
     setContentTobeDisplayed(
