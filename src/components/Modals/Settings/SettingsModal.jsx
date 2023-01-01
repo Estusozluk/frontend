@@ -53,7 +53,7 @@ const SettingsModal = (props) => {
     e.preventDefault();
     
 
-    RequestService.put("/api/User/update/" + userid, updateValues,{headers: {
+    RequestService.put("api/User/update/" + userid, updateValues,{headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",

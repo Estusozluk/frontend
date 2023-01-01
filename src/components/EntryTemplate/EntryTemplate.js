@@ -240,7 +240,7 @@ const EntryTemplate = (props) => {
     e.preventDefault();
 
 
-    RequestService.delete("/api/entry/delete/" + props.entryid,  {
+    RequestService.delete("api/entry/delete/" + props.entryid,  {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
