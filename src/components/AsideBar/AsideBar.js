@@ -17,7 +17,7 @@ const AsideBar = () => {
 
         RequestService.get("api/title/titles").then(
             res => {
-                console.log(res)
+                
                 setTitlesArray(res.data)
             }
         ).catch(

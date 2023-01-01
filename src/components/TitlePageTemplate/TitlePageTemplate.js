@@ -78,7 +78,7 @@ const TitlePageTemplate = (props) => {
       }
     )
       .then((res) => {
-        console.log(res);
+        
         if (res.status === 200) {
           setError({
             title: "Başarılı işlem",
@@ -116,7 +116,7 @@ const TitlePageTemplate = (props) => {
       }
     )
       .then((res) => {
-        console.log(res);
+        
 
         if (res.status === 200) {
           setEntryIsLiked(!entryIsLiked);
@@ -153,7 +153,7 @@ const TitlePageTemplate = (props) => {
       }
     )
       .then((res) => {
-        console.log(res);
+        
         if (res.status === 200) {
           setError({
             title: "Başarısız işlem",

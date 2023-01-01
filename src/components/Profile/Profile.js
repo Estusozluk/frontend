@@ -42,13 +42,13 @@ const Profile = () => {
 
 
     RequestService.get("api/entry/user/" + userid).then((res) => {
-      console.log(res)
+      
       setData(res.data);
     });
 
     RequestService.get("api/entry/user/liked/" + userid)
       .then((res) => {
-        console.log(res);
+        
         setLikedArray(res.data);
         console.log(likedArray);
       })
@@ -58,7 +58,7 @@ const Profile = () => {
 
     RequestService.get("api/entry/user/disliked/" + userid)
       .then((res) => {
-        console.log(res);
+       
         setDislikedArray(res.data);
       })
       .catch((err) => {
