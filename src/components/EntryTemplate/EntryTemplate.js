@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import "./EntryTemplate.css";
 import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
+import { BsTrashFill } from "react-icons/bs";
 import { IoMdAddCircle } from "react-icons/io";
 import Popup from "../Popup/Popup";
 import axios from "axios";
@@ -25,35 +26,26 @@ const EntryTemplate = (props) => {
     content: "",
   });
 
-  const [booleanCheck, setBooleanCheck] = useState(false)
-  
+  const [booleanCheck, setBooleanCheck] = useState(false);
+
   const confirm = () => {
     setError(null);
   };
 
   const getUserInfo = async (e) => {
     e.preventDefault();
-     await RequestService.get("api/User/" + props.user)
+    await RequestService.get("api/User/" + props.user)
       .then((res) => {
-       
+        setUserId2(res.data.userid);
 
-        setUserId2(res.data.userid)
+        console.log(parseInt(userid));
+        console.log(parseInt(userid2));
 
-        
-
-        console.log(parseInt(userid))
-        console.log(parseInt(userid2))
-
-        if(parseInt(userid) === parseInt(userid2)){
-
-          setBooleanCheck(true)
+        if (parseInt(userid) === parseInt(userid2)) {
+          setBooleanCheck(true);
+        } else {
+          setBooleanCheck(false);
         }
-        else{
-          setBooleanCheck(false)
-        }
-       
-       
-      
       })
       .catch((err) => {
         console.log(err);
@@ -63,33 +55,33 @@ const EntryTemplate = (props) => {
 
   const Follow = (e) => {
     e.preventDefault();
-    RequestService
-      .post("api/User/follow", {
+    RequestService.post(
+      "api/User/follow",
+      {
         follower: userid,
-        followed: userid2
-      }, {
-
+        followed: userid2,
+      },
+      {
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000/",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
           "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-          'Authorization': 'Bearer '+ token
-        }
-        
-      } )
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
       .then((res) => {
         console.log(res);
-        if(res.status === 200){
+        if (res.status === 200) {
           setError({
             title: "Işlem başarılı",
-            message: "Bu kişiyi takip ettiniz!"
-          })
+            message: "Bu kişiyi takip ettiniz!",
+          });
         }
       })
       .catch((err) => {
         console.log(err);
-       
       });
   };
 
@@ -110,22 +102,21 @@ const EntryTemplate = (props) => {
     e.preventDefault();
 
     if (ref.current.value.trim().length <= 0) {
-         setError({
+      setError({
         title: "Geçersiz değer",
         message: "Entry boş olamaz, lütfen entry giriniz !",
       });
     }
 
-    RequestService
-      .post("api/entry/", entryValues, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-          "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-          'Authorization': 'Bearer '+ token
-        }
-      })
+    RequestService.post("api/entry/", entryValues, {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:3000/",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((res) => {
         console.log(res);
 
@@ -145,7 +136,7 @@ const EntryTemplate = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        if(err.response.status === 401){
+        if (err.response.status === 401) {
           setError({
             title: "İşlem başarısız",
             message: "giriş yapılmadı galiba :(",
@@ -155,76 +146,75 @@ const EntryTemplate = (props) => {
   };
 
   const postLikeEntry = (e, entryid) => {
-    console.log(e)
-    console.log(entryid)
+    console.log(e);
+    console.log(entryid);
     e.preventDefault();
-    RequestService.post("api/entry/like", {
-      likedentryid: entryid,
-      userid: userid
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-        'Authorization': 'Bearer '+ token
+    RequestService.post(
+      "api/entry/like",
+      {
+        likedentryid: entryid,
+        userid: userid,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000/",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+          "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+          Authorization: "Bearer " + token,
+        },
       }
-    }).then(
-      res => {
-        console.log(res)
-        if(res.status === 200){
+    )
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
           setError({
             title: "İşlem başarılı",
             message: "Beğenmenize sevindik :(",
           });
         }
-      
-      }
-    ).catch(
-      err => {
-        console.log(err)
-        if(err.response.status === 401){
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 401) {
           setError({
             title: "İşlem başarısız",
             message: "giriş yapılmadı galiba :(",
           });
         }
+      });
+  };
+
+  const postDislikeEntry = (e, entryid) => {
+    e.preventDefault();
+    RequestService.post(
+      "api/entry/dislike",
+      {
+        dislikedentryid: entryid,
+        userid: userid,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000/",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+          "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+          Authorization: "Bearer " + token,
+        },
       }
     )
-
-   
-   }
-
-   const postDislikeEntry = (e, entryid) => {
-    e.preventDefault();
-    RequestService.post("api/entry/dislike", {
-      dislikedentryid: entryid,
-      userid: userid
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-        'Authorization': 'Bearer '+ token
-      }
-    }).then(
-      res => {
-        console.log(res)
-        if(res.status === 200){
-          if(res.status === 200){
-            alert("bu entry beğenilmedi")
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          if (res.status === 200) {
+            alert("bu entry beğenilmedi");
           }
         }
-       
-      }
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
-    
-   }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="entry">
       <div className="entryTitle">
@@ -236,8 +226,11 @@ const EntryTemplate = (props) => {
           >
             {props.title}
           </h2>
-         
         </div>
+        <i className="deleteButton">
+          {" "}
+          <BsTrashFill />
+        </i>
       </div>
 
       <div className="entryCaption">
@@ -246,22 +239,28 @@ const EntryTemplate = (props) => {
 
       <div className="entryFooter">
         <div className="entryLikeDislike">
-          <p className="entryLike" onClick={(e) => postLikeEntry(e, props.entryid)}>
+          <p
+            className="entryLike"
+            onClick={(e) => postLikeEntry(e, props.entryid)}
+          >
             <FaArrowUp /> {props.likes}
           </p>
-          <p className="entryDislike" onClick={(e) => postDislikeEntry(e, props.entryid)}>
+          <p
+            className="entryDislike"
+            onClick={(e) => postDislikeEntry(e, props.entryid)}
+          >
             <FaArrowDown />
             {props.dislikes}
           </p>
         </div>
 
         {error && (
-        <ErrorModal
-          confirm={confirm}
-          title={error.title}
-          message={error.message}
-        />
-      )}
+          <ErrorModal
+            confirm={confirm}
+            title={error.title}
+            message={error.message}
+          />
+        )}
 
         <div className="entryUserInfo">
           <span className="entryUserName" onClick={getUserInfo}>
@@ -301,7 +300,7 @@ const EntryTemplate = (props) => {
                 className="captionEnter"
                 required
               />
-    <div className="buttons">
+              <div className="buttons">
                 <button
                   className="closeModal"
                   onClick={() => setOpenPopup(false)}

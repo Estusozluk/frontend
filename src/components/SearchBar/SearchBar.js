@@ -14,52 +14,33 @@ const SearchBar = () => {
 
   const [openPopup, setOpenPopup] = useState(false);
 
-  const userid = localStorage.getItem('userId');
-  const token = localStorage.getItem('token');
-
- 
-
-
+  const userid = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
   const [entryValues, setEntryValues] = useState({
-  
     userid: userid,
     titlename: searchValue,
-    content: ''
+    content: "",
+  });
 
-    
-
-
-
-    
-  })
-
-  const ref = useRef()
-
-
+  const ref = useRef();
 
   const navigate = useNavigate();
 
   const handleSearchValue = (e) => {
     setSearchValue(e.target.value);
-
-    
   };
 
-  const handleEntryValues = e => {
-
-
-    const {name, value} = e.target;
+  const handleEntryValues = (e) => {
+    const { name, value } = e.target;
 
     setEntryValues({
       ...entryValues,
-      [name]: value
-    })
+      [name]: value,
+    });
+  };
 
-  }
-  
-  function createNewTitle(entry){
-
+  function createNewTitle(entry) {
     setOpenPopup(!openPopup);
     setSearchValue(entry);
   }
@@ -67,53 +48,54 @@ const SearchBar = () => {
   const handleEntryPost = async (e) => {
     e.preventDefault();
 
-    if(ref.current.value.trim().length <= 0){
-      alert("Entry boş olamaz, lütfen entry giriniz!")
+    if (ref.current.value.trim().length <= 0) {
+      alert("Entry boş olamaz, lütfen entry giriniz!");
     }
 
-    await RequestService.post('api/entry/', {
+    await RequestService.post(
+      "api/entry/",
+      {
         userid: userid,
         titlename: searchValue,
-        content: entryValues.content
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : 'http://localhost:3000/',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-        "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-        'Authorization': 'Bearer '+ token
-      }
-    }).then(
-      res => {
-        console.log(res)
-
-        if(res.status === 200){
-          console.log(entryValues)
-          alert("Entry'niz başarıyla iletildi!")
-          setOpenPopup(false)
-        }
-        else{
-          alert("Entry girilemedi, lutfen tekrar deneyiniz!")
-          setOpenPopup(false)
-        }
-      }
-    ).err(
-      err => {
-        console.log(err)
+        content: entryValues.content,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000/",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+          "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
+          Authorization: "Bearer " + token,
+        },
       }
     )
-  }
-
-
-  useEffect(() => {
-    RequestService.get("api/title/titles?StartingWith=" + searchValue)
       .then((res) => {
-        console.log(res.data);
-        setSearchArray(res.data);
+        console.log(res);
+
+        if (res.status === 200) {
+          console.log(entryValues);
+          alert("Entry'niz başarıyla iletildi!");
+          setOpenPopup(false);
+        } else {
+          alert("Entry girilemedi, lutfen tekrar deneyiniz!");
+          setOpenPopup(false);
+        }
       })
-      .catch((err) => {
+      .err((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    if (searchValue == "" || !searchValue) {
+      setSearchArray([]);
+      return;
+    }
+    RequestService.get("api/title/titles?StartingWith=" + searchValue)
+      .then((res) => {
+        setSearchArray(res.data);
+      })
+      .catch((err) => {});
   }, [searchValue]);
   return (
     <div className="searchBar">
@@ -130,8 +112,10 @@ const SearchBar = () => {
       </div>
       {searchValue != "" ? (
         <div className="dataResult">
+          <div className="dataItem" onClick={() => createNewTitle(searchValue)}>
+            Yeni başlık olustur: {searchValue}
+          </div>
           {searchArray.map((obj) => {
-           
             return (
               <div
                 onClick={() =>
@@ -142,13 +126,11 @@ const SearchBar = () => {
               </div>
             );
           })}
-          <div className="dataItem" onClick={() => createNewTitle(searchValue) }>Yeni başlık olustur: {searchValue}</div>
-
+          {}
         </div>
       ) : null}
 
-
-       <Popup trigger={openPopup} title={searchValue}>
+      <Popup trigger={openPopup} title={searchValue}>
         <div className="modal">
           <div className="overlay">
             <div className="modalContent">
@@ -163,15 +145,18 @@ const SearchBar = () => {
                 className="captionEnter"
                 required
               />
-              <button
-                className="closeModal"
-                onClick={() => setOpenPopup(false)}
-              >
-                Close
-              </button>
-              <button className="enterYourEntry" onClick={handleEntryPost}>
-                entry gir
-              </button>
+
+              <div className="buttons">
+                <button
+                  className="closeModal"
+                  onClick={() => setOpenPopup(false)}
+                >
+                  Close
+                </button>
+                <button className="enterYourEntry" onClick={handleEntryPost}>
+                  entry gir
+                </button>
+              </div>
             </div>
           </div>
         </div>

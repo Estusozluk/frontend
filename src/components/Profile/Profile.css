@@ -15,16 +15,17 @@
 .headerInformations {
   display: flex;
   flex-direction: row;
-  padding-left: 250px;
+  padding-left: 7em;
 }
 
 .username {
-  padding-top: 100px;
+  padding-top: 4em;
 }
 
 .userName {
   display: flex;
   justify-content: start;
+  align-items: center;
 }
 
 .userAvatar {
@@ -77,4 +78,18 @@
   flex-direction: column;
   float: left;
   padding-left: 80px;
+}
+
+.settings {
+  margin-left: 1em;
+  font-size: 0.75em;
+  background-color: rgb(9, 57, 9);
+  color: antiquewhite;
+  padding: 0.5em;
+  border-radius: 20px;
+}
+
+.settings:hover {
+  cursor: pointer;
+  background-color: rgba(9, 57, 9, 0.781);
 }
