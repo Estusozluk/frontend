@@ -12,9 +12,6 @@
   font-style: normal;
 }
 
-
-
-
 .topics {
   display: flex;
   flex-direction: row;
@@ -31,9 +28,12 @@
   color: antiquewhite;
   font-size: 1.5em;
   padding-left: 1em;
+  width: 219px;
 }
 
-
+.navLogo:hover {
+  color: rgb(147, 145, 145);
+}
 
 .topBar {
   display: flex;
@@ -66,9 +66,10 @@
   display: flex;
   flex-direction: row;
   margin-right: 10px;
-
+  min-width: 219px;
   color: antiquewhite;
   font-size: 1.5em;
+  justify-content: end;
 }
 .bottomBar i {
   margin-right: 0.8em;
