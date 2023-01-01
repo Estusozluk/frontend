@@ -75,7 +75,7 @@ const EntryTemplate = (props) => {
       }
     )
       .then((res) => {
-        console.log(res);
+        
        
 
         if (res.status === 200) {
@@ -128,7 +128,7 @@ const EntryTemplate = (props) => {
       },
     })
       .then((res) => {
-        console.log(res);
+        
 
         if (res.status === 200) {
           setError({
@@ -176,7 +176,7 @@ const EntryTemplate = (props) => {
       }
     )
       .then((res) => {
-        console.log(res);
+        
         if (res.status === 200) {
           setError({
             title: "İşlem başarılı",
@@ -217,7 +217,7 @@ const EntryTemplate = (props) => {
       }
     )
       .then((res) => {
-        console.log(res);
+        
         if (res.status === 200) {
           if (res.status === 200) {
             setError({
@@ -250,7 +250,7 @@ const EntryTemplate = (props) => {
       },
     }).then(
       res => {
-        console.log(res)
+        
 
         if(res.status === 200){
           setError({

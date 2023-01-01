@@ -111,7 +111,7 @@ const useForm = () => {
       },
     })
       .then((res) => {
-        console.log(res);
+        
 
         if (res.status === 200) {
           setError({
@@ -139,7 +139,7 @@ const useForm = () => {
       },
     })
       .then((res) => {
-        console.log(res);
+        
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userId", res.data.userid);
         localStorage.setItem("username", res.data.username);

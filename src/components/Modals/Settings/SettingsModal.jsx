@@ -61,7 +61,7 @@ const SettingsModal = (props) => {
       Authorization: "Bearer " + token,
     }}).then(
       res => {
-        console.log(res);
+        
         if(res.status === 200){
           setError({
             title: "Başarılı işlem",
