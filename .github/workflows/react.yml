@@ -30,7 +30,7 @@ jobs:
       run: touch .env
 
     - name: write baseurl to dotenv file
-      run: echo REACT_APP_baseUrl = https://api.solarproject.click > .env
+      run: echo REACT_APP_baseUrl = https://api.solarproject.click/ > .env
       
     - name: look current files
       run: ls
