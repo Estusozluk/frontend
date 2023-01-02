@@ -44,7 +44,7 @@ const Profile = () => {
       localStorage.setItem("followerCount", res.data.followerCount);
       localStorage.setItem("followedCount", res.data.followedCount);
       localStorage.setItem("badieCount", res.data.badieCount);
-      setFollowingArray(res.data.following);
+      setFollowingArray(res.data.badies);
       console.log(followingArray);
     });
 
