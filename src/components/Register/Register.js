@@ -2,6 +2,7 @@ import React from "react";
 import "./Register.css";
 import useForm from "../FormValidation/useForm";
 import ErrorModal from "../Modals/Error/ErrorModal";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const {
@@ -13,8 +14,11 @@ const Register = () => {
     setError,
   } = useForm();
 
+  const navigate = useNavigate();
+
   const confirm = () => {
     setError(null);
+    navigate("/login");
   };
 
   return (
