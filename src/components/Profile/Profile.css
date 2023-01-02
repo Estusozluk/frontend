@@ -71,7 +71,7 @@
   width: 91%;
 }
 
-.footerTitleHorizontal:hover{
+.footerTitleHorizontal:hover {
   background-color: green;
   border-color: green;
   width: 91%;
@@ -96,4 +96,9 @@
 .settings:hover {
   cursor: pointer;
   background-color: rgba(9, 57, 9, 0.781);
+}
+
+.badies:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }

@@ -28,6 +28,8 @@ const useForm = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  let followingArray = [];
+
   const navigate = useNavigate();
 
   const [error, setError] = useState();
@@ -111,18 +113,18 @@ const useForm = () => {
       },
     })
       .then((res) => {
-        
-
         if (res.status === 200) {
           setError({
             title: "İşlem başarılı",
             message: "Başarıyla kayıt oldunuz",
           });
-          navigate("/login");
         }
       })
       .catch((err) => {
-        console.log(err);
+        setError({
+          title: "İşlem başarısız",
+          message: "Bu kullanıcı adına sahip üye var",
+        });
       });
   };
 
@@ -139,7 +141,6 @@ const useForm = () => {
       },
     })
       .then((res) => {
-        
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userId", res.data.userid);
         localStorage.setItem("username", res.data.username);
@@ -147,6 +148,8 @@ const useForm = () => {
         localStorage.setItem("following", res.data.followedCount);
         localStorage.setItem("badies", res.data.badieCount);
         localStorage.setItem("email", res.data.email);
+
+        followingArray.push(res.data.following);
 
         console.log(localStorage.getItem("follower"));
         let token = localStorage.getItem("token");
@@ -187,6 +190,7 @@ const useForm = () => {
     error,
     setError,
     isLoggedIn,
+    followingArray,
   };
 };
 
